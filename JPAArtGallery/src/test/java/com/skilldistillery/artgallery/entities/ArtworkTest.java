@@ -13,11 +13,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-class UserTest {
+class ArtworkTest {
 
 	private static EntityManagerFactory emf;
     private EntityManager em;
-    private User user;
+    private Artwork artwork;
 
     
     @BeforeAll
@@ -34,20 +34,20 @@ class UserTest {
     @BeforeEach
     void setUp() throws Exception {
         em = emf.createEntityManager();
-        user = em.find(User.class, 1);
+        artwork = em.find(Artwork.class, 1);
     }
 
     @AfterEach
     void tearDown() throws Exception {
         em.close();
-        user = null;
+        artwork = null;
     }
     
     @Test
     void test_User_has_mappings() {
-    	assertNotNull(user);
-    	assertNotNull(user.getUsername());
-    	assertEquals("jane", user.getUsername());
+    	assertNotNull(artwork);
+    	assertNotNull(artwork.getTitle());
+    	assertEquals("Moon View 1", artwork.getTitle());
     	
     }
 
