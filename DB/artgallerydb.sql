@@ -90,7 +90,7 @@ DROP TABLE IF EXISTS `rating` ;
 
 CREATE TABLE IF NOT EXISTS `rating` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `rate` INT NULL,
+  `rate` VARCHAR(45) NULL,
   `create_time` DATETIME NULL,
   `artwork_id` INT NOT NULL,
   `user_id` INT NOT NULL,
@@ -158,8 +158,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `art_gallery`;
-INSERT INTO `rating` (`id`, `rate`, `create_time`, `artwork_id`, `user_id`) VALUES (1, 1, NULL, 1, 1);
-INSERT INTO `rating` (`id`, `rate`, `create_time`, `artwork_id`, `user_id`) VALUES (2, 2, NULL, 2, 2);
+INSERT INTO `rating` (`id`, `rate`, `create_time`, `artwork_id`, `user_id`) VALUES (1, 'Love', NULL, 1, 1);
+INSERT INTO `rating` (`id`, `rate`, `create_time`, `artwork_id`, `user_id`) VALUES (2, 'Like', NULL, 2, 2);
 
 COMMIT;
 
