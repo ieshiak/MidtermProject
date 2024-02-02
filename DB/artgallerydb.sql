@@ -5,9 +5,6 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
 -- Schema art_gallery
 -- -----------------------------------------------------
 DROP SCHEMA IF EXISTS `art_gallery` ;
@@ -27,21 +24,97 @@ CREATE TABLE IF NOT EXISTS `user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
-  `active` TINYINT NULL,
   `username` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(200) NOT NULL,
+  `active` TINYINT NULL,
   `role` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 ENGINE = InnoDB;
 
-SET SQL_MODE = '';
-DROP USER IF EXISTS artist@localhost;
-SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-CREATE USER 'artist'@'localhost' IDENTIFIED BY 'artist';
 
-GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'artist'@'localhost';
-GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'artist'@'localhost';
+-- -----------------------------------------------------
+-- Table `artwork`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `artwork` ;
+
+CREATE TABLE IF NOT EXISTS `artwork` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `artwork_image` VARCHAR(1250) NOT NULL,
+  `title` VARCHAR(500) NOT NULL,
+  `creation_year` YEAR NOT NULL,
+  `description` VARCHAR(2000) NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_artwork_user1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_artwork_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `comment`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `comment` ;
+
+CREATE TABLE IF NOT EXISTS `comment` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `comment_text` VARCHAR(2000) NULL,
+  `create_time` DATETIME NULL,
+  `update_time` DATETIME NULL,
+  `artwork_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `artwork_id`, `user_id`),
+  INDEX `fk_comment_artwork_idx` (`artwork_id` ASC),
+  INDEX `fk_comment_user1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_comment_artwork`
+    FOREIGN KEY (`artwork_id`)
+    REFERENCES `artwork` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_comment_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rating`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rating` ;
+
+CREATE TABLE IF NOT EXISTS `rating` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `rate` INT NULL,
+  `create_time` DATETIME NULL,
+  `artwork_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `artwork_id`, `user_id`),
+  INDEX `fk_rating_artwork1_idx` (`artwork_id` ASC),
+  INDEX `fk_rating_user1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_rating_artwork1`
+    FOREIGN KEY (`artwork_id`)
+    REFERENCES `artwork` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_rating_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+SET SQL_MODE = '';
+DROP USER IF EXISTS artist;
+SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+CREATE USER 'artist' IDENTIFIED BY 'artist';
+
+GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'artist';
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
@@ -52,7 +125,41 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `art_gallery`;
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `active`, `username`, `password`, `role`) VALUES (1, 'Jane', 'Johnson', true, 'jane', 'jane', 'user');
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `active`, `role`) VALUES (1, 'jane', 'johnson', 'jane', 'jane', true, 'user');
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `active`, `role`) VALUES (2, 'joe', 'howards', 'joe', 'joe', true, 'admin');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `artwork`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `art_gallery`;
+INSERT INTO `artwork` (`id`, `artwork_image`, `title`, `creation_year`, `description`, `user_id`) VALUES (1, 'https://images.pexels.com/photos/4334253/pexels-photo-4334253.jpeg', 'Moon View 1', 1987, 'photo of a moon ', 1);
+INSERT INTO `artwork` (`id`, `artwork_image`, `title`, `creation_year`, `description`, `user_id`) VALUES (2, 'https://images.pexels.com/photos/5656268/pexels-photo-5656268.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'Monn View 2', 2009, NULL, 2);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `comment`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `art_gallery`;
+INSERT INTO `comment` (`id`, `comment_text`, `create_time`, `update_time`, `artwork_id`, `user_id`) VALUES (1, 'whats up my boy', NULL, NULL, 1, 1);
+INSERT INTO `comment` (`id`, `comment_text`, `create_time`, `update_time`, `artwork_id`, `user_id`) VALUES (2, 'chillin', NULL, NULL, 2, 2);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `rating`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `art_gallery`;
+INSERT INTO `rating` (`id`, `rate`, `create_time`, `artwork_id`, `user_id`) VALUES (1, 1, NULL, 1, 1);
+INSERT INTO `rating` (`id`, `rate`, `create_time`, `artwork_id`, `user_id`) VALUES (2, 2, NULL, 2, 2);
 
 COMMIT;
 
