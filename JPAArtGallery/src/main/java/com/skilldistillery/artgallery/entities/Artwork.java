@@ -1,10 +1,13 @@
 package com.skilldistillery.artgallery.entities;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Artwork {
@@ -24,8 +27,11 @@ public class Artwork {
 	
 	private String description;
 	
-	
+    @OneToMany(mappedBy = "artwork")
+    private List<Rating> ratings;
 
+    @OneToMany(mappedBy = "artwork")
+    private List<Comment> comments;
 
 	public int getId() {
 		return id;
@@ -67,11 +73,30 @@ public class Artwork {
 		this.description = description;
 	}
 
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
 	@Override
 	public String toString() {
 		return "Artwork [id=" + id + ", artworkImage=" + artworkImage + ", title=" + title + ", creationYear="
-				+ creationYear + ", description=" + description + "]";
+				+ creationYear + ", description=" + description + ", ratings=" + ratings + ", comments=" + comments
+				+ "]";
 	}
+
+	
 	
 	
 	
