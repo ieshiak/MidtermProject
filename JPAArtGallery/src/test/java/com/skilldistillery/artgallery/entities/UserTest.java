@@ -48,7 +48,8 @@ class UserTest {
     	assertNotNull(user);
     	assertNotNull(user.getUsername());
     	assertEquals("jane", user.getUsername());
-    	
+    	assertEquals("jane", user.getFirstName());
+    	assertEquals(true, user.isActive());   	
     }
     
     @Test
