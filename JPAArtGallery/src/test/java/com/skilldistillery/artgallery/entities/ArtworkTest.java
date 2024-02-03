@@ -2,6 +2,7 @@ package com.skilldistillery.artgallery.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -50,5 +51,25 @@ class ArtworkTest {
     	assertEquals("Moon View 1", artwork.getTitle());
     	
     }
-
+    
+    @Test
+    void test_Artwork_to_Comment() {
+    	assertNotNull(artwork.getComments());
+    	assertEquals(1, artwork.getComments().size());
+    	
+    
+    }
+    @Test
+    void test_Artwork_to_Rating() {
+    	assertNotNull(artwork.getComments());
+    	assertEquals(1, artwork.getRatings().size());
+    
+    }
+    
+    @Test
+    void test_Artwork_to_User() {
+    	assertNotNull(artwork.getUser());
+    	assertEquals(1, artwork.getUser().getId());
+    
+    }
 }

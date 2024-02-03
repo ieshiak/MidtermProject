@@ -1,6 +1,7 @@
 package com.skilldistillery.artgallery.entities;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Comment {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -30,9 +31,13 @@ public class Comment {
 
 	@Column(name = "create_time")
 	private LocalDateTime createTime;
-	
+
 	@Column(name = "update_time")
 	private LocalDateTime updateTime;
+
+	public Comment() {
+
+	}
 
 	public int getId() {
 		return id;
@@ -83,10 +88,28 @@ public class Comment {
 	}
 
 	@Override
+	public int hashCode() {
+		return Objects.hash(artwork, commentText, createTime, id, updateTime, user);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Comment other = (Comment) obj;
+		return Objects.equals(artwork, other.artwork) && Objects.equals(commentText, other.commentText)
+				&& Objects.equals(createTime, other.createTime) && id == other.id
+				&& Objects.equals(updateTime, other.updateTime) && Objects.equals(user, other.user);
+	}
+
+	@Override
 	public String toString() {
 		return "Comment [id=" + id + ", user=" + user + ", artwork=" + artwork + ", commentText=" + commentText
 				+ ", createTime=" + createTime + ", updateTime=" + updateTime + "]";
 	}
-	
-	
+
 }

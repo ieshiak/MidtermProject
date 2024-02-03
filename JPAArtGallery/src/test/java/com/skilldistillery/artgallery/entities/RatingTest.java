@@ -57,4 +57,10 @@ class RatingTest {
 		assertNotNull(rating.getUser());
 	}
 
+    @Test
+   	void test_Rating_to_Artwork() {
+   		assertNotNull(rating);
+   		assertNotNull(rating.getArtwork());
+   		assertEquals(2, rating.getArtwork().getId());
+}
 }

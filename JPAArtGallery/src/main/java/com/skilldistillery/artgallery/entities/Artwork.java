@@ -1,37 +1,48 @@
 package com.skilldistillery.artgallery.entities;
 
+import java.time.Year;
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
 public class Artwork {
-	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(name="artwork_image")
-	private String artworkImage;
-	
-	private String title;
-	
-	@Column(name="creation_year")
-	private int creationYear;
-	
-	private String description;
-	
-    @OneToMany(mappedBy = "artwork")
-    private List<Rating> ratings;
 
-    @OneToMany(mappedBy = "artwork")
-    private List<Comment> comments;
+	@Column(name = "artwork_image")
+	private String artworkImage;
+
+	private String title;
+
+	@Column(name = "creation_year")
+	private Year creationYear;
+
+	private String description;
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
+	@OneToMany(mappedBy = "artwork")
+	private List<Rating> ratings;
+
+	@OneToMany(mappedBy = "artwork")
+	private List<Comment> comments;
+
+	public Artwork() {
+
+	}
 
 	public int getId() {
 		return id;
@@ -57,11 +68,11 @@ public class Artwork {
 		this.title = title;
 	}
 
-	public int getCreationYear() {
+	public Year getCreationYear() {
 		return creationYear;
 	}
 
-	public void setCreationYear(int creationYear) {
+	public void setCreationYear(Year creationYear) {
 		this.creationYear = creationYear;
 	}
 
@@ -89,17 +100,39 @@ public class Artwork {
 		this.comments = comments;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(artworkImage, comments, creationYear, description, id, ratings, title, user);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Artwork other = (Artwork) obj;
+		return Objects.equals(artworkImage, other.artworkImage) && Objects.equals(comments, other.comments)
+				&& Objects.equals(creationYear, other.creationYear) && Objects.equals(description, other.description)
+				&& id == other.id && Objects.equals(ratings, other.ratings) && Objects.equals(title, other.title)
+				&& Objects.equals(user, other.user);
+	}
+
 	@Override
 	public String toString() {
 		return "Artwork [id=" + id + ", artworkImage=" + artworkImage + ", title=" + title + ", creationYear="
-				+ creationYear + ", description=" + description + ", ratings=" + ratings + ", comments=" + comments
-				+ "]";
+				+ creationYear + ", description=" + description + ", user=" + user + ", ratings=" + ratings
+				+ ", comments=" + comments + "]";
 	}
-
-	
-	
-	
-	
-	
 
 }

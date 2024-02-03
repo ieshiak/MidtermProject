@@ -1,6 +1,7 @@
 package com.skilldistillery.artgallery.entities;
 
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,31 +12,36 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(name="first_name")
+
+	@Column(name = "first_name")
 	private String firstName;
-	
-	@Column(name="last_name")
+
+	@Column(name = "last_name")
 	private String lastName;
-	
+
 	private String username;
-	
+
 	private String password;
-	
+
 	private boolean active;
-	
+
 	private String role;
-	
-	@OneToMany(mappedBy="user")
+
+	@OneToMany(mappedBy = "user")
 	private List<Rating> ratings;
-	
+
+	@OneToMany(mappedBy = "user")
+	private List<Artwork> artworks;
+
+	@OneToMany(mappedBy = "user")
+	private List<Comment> comments;
 
 	public User() {
-		
+
 	}
 
 	public int getId() {
@@ -69,10 +75,11 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
 	public List<Rating> getRatings() {
 		return ratings;
 	}
-	
+
 	public void setRatings(List<Rating> ratings) {
 		this.ratings = ratings;
 	}
@@ -101,12 +108,48 @@ public class User {
 		this.active = active;
 	}
 
+	public List<Artwork> getArtworks() {
+		return artworks;
+	}
+
+	public void setArtworks(List<Artwork> artworks) {
+		this.artworks = artworks;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(active, artworks, comments, firstName, id, lastName, password, ratings, role, username);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return active == other.active && Objects.equals(artworks, other.artworks)
+				&& Objects.equals(comments, other.comments) && Objects.equals(firstName, other.firstName)
+				&& id == other.id && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(password, other.password) && Objects.equals(ratings, other.ratings)
+				&& Objects.equals(role, other.role) && Objects.equals(username, other.username);
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
-				+ ", password=" + password + ", active=" + active + ", role=" + role + ", ratings=" + ratings + "]";
+				+ ", password=" + password + ", active=" + active + ", role=" + role + ", ratings=" + ratings
+				+ ", artworks=" + artworks + ", comments=" + comments + "]";
 	}
-
-	
 
 }
