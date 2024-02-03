@@ -29,6 +29,10 @@ public class Rating {
     @JoinColumn(name = "user_id")
     private User user;
 	
+	@ManyToOne
+    @JoinColumn(name = "artwork_id")
+    private Artwork artwork;
+	
 	public Rating() {
 		
 	}
