@@ -50,5 +50,11 @@ class RatingTest {
     	assertEquals(Rate.Like, rating.getRate());
     	
     }
+    
+    @Test
+	void test_Rating_has_User() {
+		assertNotNull(rating);
+		assertNotNull(rating.getUser());
+	}
 
 }

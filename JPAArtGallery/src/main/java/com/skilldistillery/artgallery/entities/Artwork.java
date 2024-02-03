@@ -23,6 +23,9 @@ public class Artwork {
 	private int creationYear;
 	
 	private String description;
+	
+	
+
 
 	public int getId() {
 		return id;

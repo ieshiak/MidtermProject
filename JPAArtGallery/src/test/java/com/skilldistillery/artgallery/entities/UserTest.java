@@ -50,5 +50,12 @@ class UserTest {
     	assertEquals("jane", user.getUsername());
     	
     }
+    
+    @Test
+	void test_User_has_Ratings() {
+		assertNotNull(user);
+		assertEquals(1,user.getRatings().size());
+    
+    }
 
 }
