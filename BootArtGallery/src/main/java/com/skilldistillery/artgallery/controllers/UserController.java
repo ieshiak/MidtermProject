@@ -13,13 +13,13 @@ public class UserController {
 	@Autowired
 	private UserDAO userDAO;
 	
-	@GetMapping("/")
-	public String home(Model model) {
-		User u = userDAO.authenticateUser("jane", "jane");
-		model.addAttribute("testUser", u);
-		return "home";
-		
-	}
+//	@GetMapping("/")
+//	public String home(Model model) {
+//		User u = userDAO.authenticateUser("jane", "jane");
+//		model.addAttribute("testUser", u);
+//		return "home";
+//		
+//	}
 	
 	
 	

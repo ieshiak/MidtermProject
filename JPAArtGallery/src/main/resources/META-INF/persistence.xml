@@ -3,6 +3,9 @@
 	<persistence-unit name="JPAArtGallery">
 	  <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 	  
+    <class>com.skilldistillery.artgallery.entities.Artwork</class>
+    <class>com.skilldistillery.artgallery.entities.Comment</class>
+    <class>com.skilldistillery.artgallery.entities.Rating</class>
     <class>com.skilldistillery.artgallery.entities.User</class>
 	
 	<properties>

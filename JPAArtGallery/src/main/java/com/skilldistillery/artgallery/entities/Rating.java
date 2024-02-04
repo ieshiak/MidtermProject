@@ -126,8 +126,9 @@ public class Rating {
 
 	@Override
 	public String toString() {
-		return "Rating [id=" + id + ", rate=" + rate + ", createTime=" + createTime + ", user=" + user + ", artwork="
-				+ artwork + "]";
+		return "Rating [id=" + id + ", rate=" + rate + ", createTime=" + createTime + "]";
 	}
+
+	
 
 }

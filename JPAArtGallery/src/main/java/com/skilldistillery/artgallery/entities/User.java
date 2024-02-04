@@ -200,8 +200,9 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
-				+ ", password=" + password + ", active=" + active + ", role=" + role + ", ratings=" + ratings
-				+ ", artworks=" + artworks + ", comments=" + comments + "]";
+				+ ", password=" + password + ", active=" + active + ", role=" + role + "]";
 	}
+
+	
 
 }

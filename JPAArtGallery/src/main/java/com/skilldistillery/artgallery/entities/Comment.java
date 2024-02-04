@@ -121,10 +121,12 @@ public class Comment {
             user = null;
         }
     }
+
 	@Override
 	public String toString() {
 		return "Comment [id=" + id + ", user=" + user + ", artwork=" + artwork + ", commentText=" + commentText
 				+ ", createTime=" + createTime + ", updateTime=" + updateTime + "]";
 	}
+	
 
 }
