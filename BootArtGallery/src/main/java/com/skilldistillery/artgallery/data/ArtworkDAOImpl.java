@@ -21,9 +21,18 @@ public class ArtworkDAOImpl implements ArtworkDAO{
 
 	@Override
 	public Artwork findById(int artworkId) {
-		// TODO Auto-generated method stub
-		return null;
+        System.out.println("Debug: Entered findById method with artworkId: " + artworkId);
+
+        Artwork artwork = em.find(Artwork.class, artworkId);
+
+        if (artwork != null) {
+            System.out.println("Debug: Found artwork with details: " + artwork);
+        } else {
+            System.out.println("Debug: Artwork not found with artworkId: " + artworkId);
+        }
+        return artwork;
 	}
+
 
 	@Override
 	public List<Artwork> findAll() {

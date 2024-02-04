@@ -2,6 +2,7 @@ package com.skilldistillery.artgallery.controllers;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.skilldistillery.artgallery.data.UserDAO;
+import com.skilldistillery.artgallery.entities.Comment;
 import com.skilldistillery.artgallery.entities.User;
 
 import jakarta.servlet.http.HttpSession;
@@ -41,25 +43,25 @@ public class LoginController {
 	}
 
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
-    public String doLogin(User user, HttpSession session, Model model) {
-        try {
-            User authenticatedUser = userDAO.authenticateUser(user.getUsername(), user.getPassword());
+	public String doLogin(User user, HttpSession session, Model model) {
+		try {
+			User authenticatedUser = userDAO.authenticateUser(user.getUsername(), user.getPassword());
 
-            if (authenticatedUser != null) {
-                session.setAttribute("loggedInUser", authenticatedUser);
-                LocalDateTime lt = LocalDateTime.now();
-                session.setAttribute("loginTime", lt);
-                return "account";
-            } else {
-                System.out.println("Authentication failed. Redirecting to login.");
-                return "login";
-            }
-        } catch (Exception e) {
-            System.out.println("An error occurred during login.");
-            e.printStackTrace();
-            model.addAttribute("errorDetails", "Invalid username or password."); 
-            return "error";
-        }
+			if (authenticatedUser != null) {
+				session.setAttribute("loggedInUser", authenticatedUser);
+				LocalDateTime lt = LocalDateTime.now();
+				session.setAttribute("loginTime", lt);
+				return "account";
+			} else {
+				System.out.println("Authentication failed. Redirecting to login.");
+				return "login";
+			}
+		} catch (Exception e) {
+			System.out.println("An error occurred during login.");
+			e.printStackTrace();
+			model.addAttribute("errorDetails", "Invalid username or password.");
+			return "error";
+		}
 	}
 
 	@RequestMapping("/logout")
@@ -70,19 +72,6 @@ public class LoginController {
 		session.removeAttribute("loginTime");
 		session.removeAttribute("timeOnSite");
 		return mv;
-	}
-
-	@RequestMapping(path = "/account", method = RequestMethod.GET)
-	public String accountView(HttpSession session) {
-		LocalDateTime loginTime = (LocalDateTime) session.getAttribute("loginTime");
-		if (loginTime != null) {
-			LocalDateTime now = LocalDateTime.now();
-			Duration totalTime = Duration.between(loginTime, now);
-			session.setAttribute("timeOnSite", totalTime);
-			return "account";
-		} else {
-			return "login";
-		}
 	}
 
 }

@@ -16,5 +16,7 @@ public interface CommentDAO {
 
     boolean delete(int commentId);
 
-    List<Comment> findCommentsByUserId(int userId);
+    //List<Comment> findCommentsByUserId(int userId);
+    
+    List<Comment> retrieveUserComments(String username);
 }

@@ -77,8 +77,11 @@ public class Comment {
 	}
 
 	public void setCreateTime(LocalDateTime createTime) {
-		this.createTime = createTime;
+	    if (this.createTime == null) {
+	        this.createTime = LocalDateTime.now();
+	    }
 	}
+
 
 	public LocalDateTime getUpdateTime() {
 		return updateTime;
@@ -106,27 +109,36 @@ public class Comment {
 				&& Objects.equals(createTime, other.createTime) && id == other.id
 				&& Objects.equals(updateTime, other.updateTime) && Objects.equals(user, other.user);
 	}
-	
+
 	public void addArtwork(Artwork artwork) {
-        if (artwork != null && !artwork.getComments().contains(this)) {
-            this.artwork = artwork;
-            artwork.getComments().add(this);
-        }
-		
+		if (artwork != null && !artwork.getComments().contains(this)) {
+			this.artwork = artwork;
+			artwork.getComments().add(this);
+		}
+
 	}
 
 	public void removeArtwork(Artwork artwork) {
-        if (user != null && artwork != null && artwork.getComments().contains(this)) {
-            artwork.getComments().remove(this);
-            user = null;
-        }
-    }
+		if (user != null && artwork != null && artwork.getComments().contains(this)) {
+		    artwork.getComments().remove(this);
+		    user = null;
+		    artwork = null; // Set artwork to null, not user
+		}
+
+
+	}
+	
+	
 
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", user=" + user + ", artwork=" + artwork + ", commentText=" + commentText
-				+ ", createTime=" + createTime + ", updateTime=" + updateTime + "]";
+	    return "Comment{" +
+	            "id=" + id +
+	            ", user=" + user +
+	            ", commentText='" + commentText + '\'' +
+	            ", createTime=" + createTime +
+	            '}';
 	}
-	
+
 
 }

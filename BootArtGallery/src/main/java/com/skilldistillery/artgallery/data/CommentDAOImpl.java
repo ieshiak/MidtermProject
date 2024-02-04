@@ -1,10 +1,13 @@
 package com.skilldistillery.artgallery.data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.artgallery.entities.Comment;
+import com.skilldistillery.artgallery.entities.User;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -14,8 +17,13 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class CommentDAOImpl implements CommentDAO {
 
+	
+	@Autowired
+    private UserDAO userDAO;
 	@PersistenceContext
 	private EntityManager em;
+	
+
 
 	@Override
 	public Comment findById(int commentId) {
@@ -31,9 +39,11 @@ public class CommentDAOImpl implements CommentDAO {
 
 	@Override
 	public Comment create(Comment comment) {
-		// TODO Auto-generated method stub
-		return null;
+	    comment.setCreateTime(LocalDateTime.now());
+	    em.persist(comment);
+	    return comment;
 	}
+
 
 	@Override
 	public Comment update(Comment comment) {
@@ -48,9 +58,31 @@ public class CommentDAOImpl implements CommentDAO {
 	}
 
 	@Override
-	public List<Comment> findCommentsByUserId(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Comment> retrieveUserComments(String username) {
+	    try {
+	        System.out.println("Entering retrieveUserComments method");
+
+	        // Print the provided username for debugging
+	        System.out.println("Provided username: " + username);
+
+	        User user = userDAO.findUserByUsername(username);
+
+	        if (user != null) {
+	            // Print user details for debugging
+	            System.out.println("User found: " + user);
+
+	            return userDAO.findCommentsByUserId(user.getId());
+	        } else {
+	            throw new RuntimeException("User not found for username: " + username);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        throw e; // Rethrow the exception to propagate it
+	    }
 	}
+
+	
+
+
 
 }

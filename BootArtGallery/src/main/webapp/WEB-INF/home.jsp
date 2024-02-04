@@ -10,6 +10,7 @@
 <%--Edit the file nav.jsp to change nav links --%>
 <jsp:include page="nav.jsp"/>
 
-<h2>Welcome to the site</h2>
+<h2>LOVE.LIKE.HATE</h2>
+
 </body>
 </html>

@@ -16,8 +16,20 @@
 <c:choose>
 <c:when test="${not empty sessionScope.loggedInUser }">
 	<hr>
-	<h2>Username: <c:out value="${sessionScope.loggedInUser.username}"/></h2>
+	<h2>Hello,  <c:out value="${sessionScope.loggedInUser.username}"/></h2>
 	<h4>Login time: <c:out value="${sessionScope.loginTime}"/></h4>
+     <h3>Recent Comments:</h3>
+            <c:if test="${not empty comments}">
+                <ul>
+                    <c:forEach var="comment" items="${comments}">
+                        <li>${comment.commentText} - ${comment.createTime}</li> <!-- Adjust based on your Comment entity -->
+                    </c:forEach>
+                </ul>
+            </c:if>
+            <c:if test="${empty comments}">
+                <p>No comments available.</p>
+            </c:if>
+	
 </c:when>
 <c:otherwise>
 <p>Not logged in</p>

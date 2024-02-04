@@ -13,6 +13,8 @@ public interface UserDAO {
 	
 	User findById(int userId);
 
+	User findUserByUsername(String username);
+	
 	List<User> findAll();
 	
     User create(User user);
@@ -28,6 +30,7 @@ public interface UserDAO {
     List<Comment> findCommentsByUserId(int userId);
 
     List<Rating> findRatingsByUserId(int userId);
+
 }
 	
 	
