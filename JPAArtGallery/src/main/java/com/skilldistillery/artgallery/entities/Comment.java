@@ -1,6 +1,7 @@
 package com.skilldistillery.artgallery.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -105,7 +106,21 @@ public class Comment {
 				&& Objects.equals(createTime, other.createTime) && id == other.id
 				&& Objects.equals(updateTime, other.updateTime) && Objects.equals(user, other.user);
 	}
+	
+	public void addArtwork(Artwork artwork) {
+        if (artwork != null && !artwork.getComments().contains(this)) {
+            this.artwork = artwork;
+            artwork.getComments().add(this);
+        }
+		
+	}
 
+	public void removeArtwork(Artwork artwork) {
+        if (user != null && artwork != null && artwork.getComments().contains(this)) {
+            artwork.getComments().remove(this);
+            user = null;
+        }
+    }
 	@Override
 	public String toString() {
 		return "Comment [id=" + id + ", user=" + user + ", artwork=" + artwork + ", commentText=" + commentText

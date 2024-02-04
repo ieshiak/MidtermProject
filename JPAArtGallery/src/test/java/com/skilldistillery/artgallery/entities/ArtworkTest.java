@@ -17,11 +17,10 @@ import jakarta.persistence.Persistence;
 class ArtworkTest {
 
 	private static EntityManagerFactory emf;
-    private EntityManager em;
-    private Artwork artwork;
+	private EntityManager em;
+	private Artwork artwork;
 
-    
-    @BeforeAll
+	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		emf = Persistence.createEntityManagerFactory("JPAArtGallery");
 	}
@@ -30,46 +29,45 @@ class ArtworkTest {
 	static void tearDownAfterClass() throws Exception {
 		emf.close();
 	}
-	
-	
-    @BeforeEach
-    void setUp() throws Exception {
-        em = emf.createEntityManager();
-        artwork = em.find(Artwork.class, 1);
-    }
 
-    @AfterEach
-    void tearDown() throws Exception {
-        em.close();
-        artwork = null;
-    }
-    
-    @Test
-    void test_Artwork_has_mappings() {
-    	assertNotNull(artwork);
-    	assertNotNull(artwork.getTitle());
-    	assertEquals("Moon View 1", artwork.getTitle());
-    	
-    }
-    
-    @Test
-    void test_Artwork_to_Comment() {
-    	assertNotNull(artwork.getComments());
-    	assertEquals(1, artwork.getComments().size());
-    	
-    
-    }
-    @Test
-    void test_Artwork_to_Rating() {
-    	assertNotNull(artwork.getComments());
-    	assertEquals(1, artwork.getRatings().size());
-    
-    }
-    
-    @Test
-    void test_Artwork_to_User() {
-    	assertNotNull(artwork.getUser());
-    	assertEquals(1, artwork.getUser().getId());
-    
-    }
+	@BeforeEach
+	void setUp() throws Exception {
+		em = emf.createEntityManager();
+		artwork = em.find(Artwork.class, 1);
+	}
+
+	@AfterEach
+	void tearDown() throws Exception {
+		em.close();
+		artwork = null;
+	}
+
+	@Test
+	void test_Artwork_has_mappings() {
+		assertNotNull(artwork);
+		assertNotNull(artwork.getTitle());
+		assertEquals("Moon View 1", artwork.getTitle());
+
+	}
+
+	@Test
+	void test_Artwork_to_Comment() {
+		assertNotNull(artwork.getComments());
+		assertEquals(1, artwork.getComments().size());
+
+	}
+
+	@Test
+	void test_Artwork_to_Rating() {
+		assertNotNull(artwork.getComments());
+		assertEquals(1, artwork.getRatings().size());
+
+	}
+
+	@Test
+	void test_Artwork_to_User() {
+		assertNotNull(artwork.getUser());
+		assertEquals(1, artwork.getUser().getId());
+
+	}
 }

@@ -1,5 +1,6 @@
 package com.skilldistillery.artgallery.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -122,6 +123,57 @@ public class User {
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
+	}
+
+	public void addRating(Rating rating) {
+		if (ratings == null) {
+			ratings = new ArrayList<>();
+		}
+		if (!ratings.contains(rating)) {
+			ratings.add(rating);
+			rating.setUser(this);
+		}
+	}
+
+	public void removeRating(Rating rating) {
+		if (ratings != null && ratings.contains(rating)) {
+			ratings.remove(rating);
+			rating.setUser(null);
+		}
+	}
+
+	public void addArtwork(Artwork artwork) {
+		if (artworks == null) {
+			artworks = new ArrayList<>();
+		}
+		if (!artworks.contains(artwork)) {
+			artworks.add(artwork);
+			artwork.setUser(this);
+		}
+	}
+
+	public void removeArtwork(Artwork artwork) {
+		if (artworks != null && artworks.contains(artwork)) {
+			artworks.remove(artwork);
+			artwork.setUser(null);
+		}
+	}
+
+	public void addComment(Comment comment) {
+		if (comments == null) {
+			comments = new ArrayList<>();
+		}
+		if (!comments.contains(comment)) {
+			comments.add(comment);
+			comment.setUser(this);
+		}
+	}
+
+	public void removeComment(Comment comment) {
+		if (comments != null && comments.contains(comment)) {
+			comments.remove(comment);
+			comment.setUser(null);
+		}
 	}
 
 	@Override

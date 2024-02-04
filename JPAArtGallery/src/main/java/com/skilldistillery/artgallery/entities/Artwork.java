@@ -1,6 +1,7 @@
 package com.skilldistillery.artgallery.entities;
 
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -128,11 +129,45 @@ public class Artwork {
 				&& Objects.equals(user, other.user);
 	}
 
+	public void addComment(Comment comment) {
+		if (comments == null) {
+			comments = new ArrayList<>();
+		}
+		if (!comments.contains(comment)) {
+			comments.add(comment);
+			comment.addArtwork(this);
+		}
+
+	}
+
+	public void removeComment(Comment comment) {
+		if (comments != null && comments.contains(comment)) {
+			comments.remove(comment);
+			comment.removeArtwork(this);
+		}
+	}
+
+	public void addRating(Rating rating) {
+		if (ratings == null) {
+			ratings = new ArrayList<>();
+		}
+		if (!ratings.contains(rating)) {
+			ratings.add(rating);
+			rating.setArtwork(this);
+		}
+	}
+
+	public void removeRating(Rating rating) {
+		if (ratings != null && ratings.contains(rating)) {
+			ratings.remove(rating);
+			rating.setArtwork(null);
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "Artwork [id=" + id + ", artworkImage=" + artworkImage + ", title=" + title + ", creationYear="
 				+ creationYear + ", description=" + description + ", user=" + user + ", ratings=" + ratings
 				+ ", comments=" + comments + "]";
 	}
-
 }

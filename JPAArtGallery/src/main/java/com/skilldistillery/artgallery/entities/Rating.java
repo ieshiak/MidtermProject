@@ -78,6 +78,34 @@ public class Rating {
 		this.artwork = artwork;
 	}
 
+	public void addUser(User user) {
+		if (user != null && this.user == null) {
+			this.user = user;
+			user.getRatings().add(this);
+		}
+	}
+
+	public void removeUser() {
+		if (user != null) {
+			user.getRatings().remove(this);
+			user = null;
+		}
+	}
+
+	public void addArtwork(Artwork artwork) {
+		if (artwork != null && this.artwork == null) {
+			this.artwork = artwork;
+			artwork.getRatings().add(this);
+		}
+	}
+
+	public void removeArtwork() {
+		if (artwork != null) {
+			artwork.getRatings().remove(this);
+			artwork = null;
+		}
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(artwork, createTime, id, rate, user);

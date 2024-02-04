@@ -2,7 +2,6 @@ package com.skilldistillery.artgallery.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -56,4 +55,9 @@ class CommentTest {
 		assertEquals(1, comment.getArtwork().getId());
 	}
 
+	@Test
+	void test_Comment_to_User() {
+		assertNotNull(comment.getUser());
+		assertEquals(1, comment.getUser().getId());
+	}
 }
