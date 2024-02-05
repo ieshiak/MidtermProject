@@ -44,6 +44,7 @@ public class CommentDAOImpl implements CommentDAO {
 	}
 
 	@Override
+	@Transactional
 	public Comment update(Comment comment) {
 		Comment managed = em.find(Comment.class, comment.getId());
 		
@@ -55,6 +56,7 @@ public class CommentDAOImpl implements CommentDAO {
 	}
 
 	@Override
+	@Transactional
 	public boolean delete(int commentId) {
 		Comment commentToDelete = findById(commentId);
 		if(commentToDelete != null) {

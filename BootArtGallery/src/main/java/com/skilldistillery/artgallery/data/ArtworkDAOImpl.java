@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.skilldistillery.artgallery.entities.Artwork;
 import com.skilldistillery.artgallery.entities.Comment;
 import com.skilldistillery.artgallery.entities.Rating;
+import com.skilldistillery.artgallery.entities.User;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -47,27 +48,46 @@ public class ArtworkDAOImpl implements ArtworkDAO {
     }
 
 	@Override
+	@Transactional
 	public Artwork update(Artwork artwork) {
-		// TODO Auto-generated method stub
-		return null;
+		Artwork managed = em.find(Artwork.class, artwork.getId());
+		if(managed != null) {
+			managed.setTitle(artwork.getTitle());
+			managed.setDescription(artwork.getDescription());
+			managed.setCreationYear(artwork.getCreationYear());
+		}
+		return managed;
 	}
 
 	@Override
+	@Transactional
 	public boolean delete(int artworkId) {
-		// TODO Auto-generated method stub
+		Artwork artworkToDelete = findById(artworkId);
+		if(artworkToDelete != null) {
+			try {
+				em.remove(artworkToDelete);
+				return true;
+		      } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
 		return false;
 	}
 
 	@Override
 	public List<Comment> findCommentsByArtworkId(int artworkId) {
-		// TODO Auto-generated method stub
-		return null;
+		String query = "SELECT c FROM Comment c WHERE c.artwork.id = :artworkId";
+		List<Comment> comments = em.createQuery(query, Comment.class).setParameter(artworkId, artworkId)
+				.getResultList();
+		return comments;
 	}
 
 	@Override
 	public List<Rating> findRatingsByArtworkId(int artworkId) {
-		// TODO Auto-generated method stub
-		return null;
+		String query = "SELECT r FROM Rating r WHERE r.artwork.id = :artworkId";
+		List<Rating> ratings = em.createQuery(query, Rating.class).setParameter("artworkId", artworkId)
+				.getResultList();
+		return ratings;
 	}
 
 }

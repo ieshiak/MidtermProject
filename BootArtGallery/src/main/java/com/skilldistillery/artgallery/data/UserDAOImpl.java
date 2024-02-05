@@ -105,7 +105,7 @@ public class UserDAOImpl implements UserDAO {
 		String query = "SELECT r FROM Rating r WHERE r.user.id = :userId";
 		List<Rating> ratings = em.createQuery(query, Rating.class).setParameter("userId", userId)
 				.getResultList();
-		System.out.println("Retrieved Comments: " + ratings);
+		System.out.println("Retrieved Ratings: " + ratings);
 		return ratings;
 	}	
 

@@ -38,6 +38,7 @@ public class RatingDAOImpl implements RatingDAO {
 	}
 
 	@Override
+	@Transactional
 	public Rating update(Rating rating) {
 		Rating managed = em.find(Rating.class, rating.getId());
 		if (managed != null) {
@@ -48,6 +49,7 @@ public class RatingDAOImpl implements RatingDAO {
 	}
 
 	@Override
+	@Transactional
 	public boolean delete(int ratingId) {
 		Rating ratingToDelete = findById(ratingId);
 		if (ratingToDelete != null) {
@@ -59,12 +61,6 @@ public class RatingDAOImpl implements RatingDAO {
 			}
 		}
 		return false;
-	}
-
-	@Override
-	public List<Rating> findRatingsByUserId(int userId) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
