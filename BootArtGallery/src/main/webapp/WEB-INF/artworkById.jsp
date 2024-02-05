@@ -9,6 +9,7 @@
 <body>
 <%--Edit the file nav.jsp to change nav links --%>
 <jsp:include page="nav.jsp"/>
+
     <c:if test="${not empty artwork}">
         <div style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px;">
            <h3><a href="<c:url value='/artwork/${artwork.id}' />">${artwork.title}</a></h3>
@@ -22,8 +23,5 @@
         </div>
     </c:if>
 
-    <c:if test="${empty artwork}">
-        <p>Artwork not found.</p>
-    </c:if>
 </body>
 </html>

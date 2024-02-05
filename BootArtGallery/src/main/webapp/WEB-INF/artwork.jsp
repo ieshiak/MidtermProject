@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,12 +9,15 @@
 <body>
 <%--Edit the file nav.jsp to change nav links --%>
 <jsp:include page="nav.jsp"/>
-<h2>Artwork Details</h2>
 
-    <p>Title: ${artwork.title}</p>
-    <p>Creation Year: ${artwork.creationYear}</p>
-    <p>Description: ${artwork.description}</p>
-
+<h2>All Artwork</h2>
+<c:forEach var="artwork" items="${artworks}">
+    <p>
+        <a href="getArtwork.do?artworkId=${artwork.id}">
+            ${artwork.title}
+        </a>
+    </p>
+</c:forEach>
 
 </body>
 </html>

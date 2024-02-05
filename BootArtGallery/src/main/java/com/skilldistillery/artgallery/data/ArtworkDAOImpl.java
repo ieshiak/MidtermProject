@@ -10,45 +10,41 @@ import com.skilldistillery.artgallery.entities.Rating;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class ArtworkDAOImpl implements ArtworkDAO{
+public class ArtworkDAOImpl implements ArtworkDAO {
 
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Override
 	public Artwork findById(int artworkId) {
-        System.out.println("Debug: Entered findById method with artworkId: " + artworkId);
-        Artwork artwork = em.find(Artwork.class, artworkId);
+		System.out.println("Debug: Entered findById method with artworkId: " + artworkId);
+		Artwork artwork = em.find(Artwork.class, artworkId);
 
-        if (artwork != null) {
-            System.out.println("Debug: Found artwork with details: " + artwork);
-        } else {
-            System.out.println("Debug: Artwork not found with artworkId: " + artworkId);
-        }
-        return artwork;
+		if (artwork != null) {
+			System.out.println("Debug: Found artwork with details: " + artwork);
+		} else {
+			System.out.println("Debug: Artwork not found with artworkId: " + artworkId);
+		}
+		return artwork;
 	}
-	
-	@Override
-    public void save(Artwork artwork) {
-        em.persist(artwork);
-    }
-
 
 	@Override
 	public List<Artwork> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		String jpql = "SELECT a FROM Artwork a";
+		Query query = em.createQuery(jpql, Artwork.class);
+		return query.getResultList();
 	}
 
 	@Override
-	public Artwork create(Artwork artwork) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Artwork create(Artwork artwork) {
+        em.persist(artwork);
+        return artwork;
+    }
 
 	@Override
 	public Artwork update(Artwork artwork) {

@@ -22,6 +22,6 @@ public interface ArtworkDAO {
 
     List<Rating> findRatingsByArtworkId(int artworkId);
 
-	void save(Artwork artwork);
+	
 	
 }

@@ -29,11 +29,12 @@
 </c:when>
 <c:otherwise>
 <a href="/login">Login</a>
+<a href="/artwork">Artwork</a>
 </c:otherwise>
 </c:choose>
 
-<form action="/artwork" method="GET">
-    Show Artwork ID: <input type="text" name="artworkId" required />
-    <input type="submit" value="Show Artwork" />
+<form action="getArtwork.do" method="GET">
+  Artwork ID: <input type="text" name="artworkId" />
+  <input type="submit" value="Show Artwork" />
 </form>
 </nav>

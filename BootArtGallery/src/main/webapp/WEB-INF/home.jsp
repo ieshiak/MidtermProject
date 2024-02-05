@@ -10,15 +10,10 @@
 <%--Edit the file nav.jsp to change nav links --%>
 <jsp:include page="nav.jsp"/>
 
-<h2>LOVE.LIKE.HATE</h2>
+<h2>LOVE.LIKE.HATE Art Gallery</h2>
 
-    <p>
-        Title: ${artwork.title}<br>
-        Creation Year: ${artwork.creationYear}<br>
-        Description: ${artwork.description}<br>
-        <img src="images/IMG_7157.JPG">
-        
-    </p>
+
+
 
 </body>
 </html>
