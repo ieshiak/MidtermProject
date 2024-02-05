@@ -15,18 +15,12 @@ public interface UserDAO {
 
 	User findUserByUsername(String username);
 	
-	List<User> findAll();
-	
     User create(User user);
 	
     User update(User user);
 	
     boolean delete(int id);
     
-    List<User> findUsersByKeyword(String keyword);
-
-    List<Artwork> findArtworkById(int artworkId);
-
     List<Comment> findCommentsByUserId(int userId);
 
     List<Rating> findRatingsByUserId(int userId);
