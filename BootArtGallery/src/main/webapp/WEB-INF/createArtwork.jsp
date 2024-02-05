@@ -9,6 +9,8 @@
 </head>
 <body>
 	<h3>Create Artwork</h3>
+	<h3>HEY</h3>
+	
 	<form action="/createArtwork" method="post">
 		<div>
 			Title: <input type="text" name="title" required /> <br>
