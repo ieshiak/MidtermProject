@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -21,9 +22,10 @@ public class Artwork {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "artwork_image")
-	private String artworkImage;
-
+	@Lob
+    @Column(name = "artwork_image")
+    private String artworkImage;
+	
 	private String title;
 
 	@Column(name = "creation_year")
@@ -52,6 +54,7 @@ public class Artwork {
 	public void setId(int id) {
 		this.id = id;
 	}
+
 
 	public String getArtworkImage() {
 		return artworkImage;
@@ -111,7 +114,7 @@ public class Artwork {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(artworkImage, comments, creationYear, description, id, ratings, title, user);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -123,10 +126,7 @@ public class Artwork {
 		if (getClass() != obj.getClass())
 			return false;
 		Artwork other = (Artwork) obj;
-		return Objects.equals(artworkImage, other.artworkImage) && Objects.equals(comments, other.comments)
-				&& Objects.equals(creationYear, other.creationYear) && Objects.equals(description, other.description)
-				&& id == other.id && Objects.equals(ratings, other.ratings) && Objects.equals(title, other.title)
-				&& Objects.equals(user, other.user);
+		return id == other.id;
 	}
 
 	public void addComment(Comment comment) {
@@ -166,8 +166,7 @@ public class Artwork {
 
 	@Override
 	public String toString() {
-		return "Artwork [id=" + id + ", artworkImage=" + artworkImage + ", title=" + title + ", creationYear="
-				+ creationYear + ", description=" + description + "]";
+		return "Artwork [id=" + id + ", title=" + title + ", description=" + description + "]";
 	}
 
 	

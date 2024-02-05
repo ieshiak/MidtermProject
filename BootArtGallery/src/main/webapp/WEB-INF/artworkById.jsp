@@ -19,11 +19,9 @@
             <p>Description: ${artwork.description}</p>
             <p>Ratings: ${artwork.ratings}</p>
             <p>Comments: ${artwork.comments}</p>
-            <!-- Add other artwork details as needed -->
         </div>
     </c:if>
 
-    <!-- Handle the case where the artwork is not found -->
     <c:if test="${empty artwork}">
         <p>Artwork not found.</p>
     </c:if>

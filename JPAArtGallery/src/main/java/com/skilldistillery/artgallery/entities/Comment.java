@@ -93,7 +93,7 @@ public class Comment {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(artwork, commentText, createTime, id, updateTime, user);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -105,9 +105,7 @@ public class Comment {
 		if (getClass() != obj.getClass())
 			return false;
 		Comment other = (Comment) obj;
-		return Objects.equals(artwork, other.artwork) && Objects.equals(commentText, other.commentText)
-				&& Objects.equals(createTime, other.createTime) && id == other.id
-				&& Objects.equals(updateTime, other.updateTime) && Objects.equals(user, other.user);
+		return id == other.id;
 	}
 
 	public void addArtwork(Artwork artwork) {
@@ -132,12 +130,7 @@ public class Comment {
 
 	@Override
 	public String toString() {
-	    return "Comment{" +
-	            "id=" + id +
-	            ", user=" + user +
-	            ", commentText='" + commentText + '\'' +
-	            ", createTime=" + createTime +
-	            '}';
+		return "Comment [id=" + id + ", artwork=" + artwork + ", commentText=" + commentText + "]";
 	}
 
 

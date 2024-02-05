@@ -18,11 +18,10 @@ public class ArtworkDAOImpl implements ArtworkDAO{
 
 	@PersistenceContext
 	private EntityManager em;
-
+	
 	@Override
 	public Artwork findById(int artworkId) {
         System.out.println("Debug: Entered findById method with artworkId: " + artworkId);
-
         Artwork artwork = em.find(Artwork.class, artworkId);
 
         if (artwork != null) {
@@ -32,6 +31,11 @@ public class ArtworkDAOImpl implements ArtworkDAO{
         }
         return artwork;
 	}
+	
+	@Override
+    public void save(Artwork artwork) {
+        em.persist(artwork);
+    }
 
 
 	@Override

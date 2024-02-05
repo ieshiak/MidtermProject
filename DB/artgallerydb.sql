@@ -40,11 +40,11 @@ DROP TABLE IF EXISTS `artwork` ;
 
 CREATE TABLE IF NOT EXISTS `artwork` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `artwork_image` VARCHAR(1250) NOT NULL,
-  `title` VARCHAR(500) NOT NULL,
-  `creation_year` YEAR NOT NULL,
+  `artwork_image` BLOB NULL,
+  `title` VARCHAR(500) NULL,
+  `creation_year` YEAR NULL,
   `description` VARCHAR(2000) NULL,
-  `user_id` INT NOT NULL,
+  `user_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_artwork_user1_idx` (`user_id` ASC),
   CONSTRAINT `fk_artwork_user1`
@@ -109,6 +109,18 @@ CREATE TABLE IF NOT EXISTS `rating` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `artwork_copy1`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `artwork_copy1` ;
+
+CREATE TABLE IF NOT EXISTS `artwork_copy1` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `artwork_image` BLOB NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
 SET SQL_MODE = '';
 DROP USER IF EXISTS artist;
 SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
@@ -136,8 +148,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `art_gallery`;
-INSERT INTO `artwork` (`id`, `artwork_image`, `title`, `creation_year`, `description`, `user_id`) VALUES (1, 'https://images.pexels.com/photos/4334253/pexels-photo-4334253.jpeg', 'Moon View 1', 1987, 'photo of a moon ', 1);
-INSERT INTO `artwork` (`id`, `artwork_image`, `title`, `creation_year`, `description`, `user_id`) VALUES (2, 'https://images.pexels.com/photos/5656268/pexels-photo-5656268.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', 'Monn View 2', 2009, NULL, 2);
+INSERT INTO `artwork` (`id`, `artwork_image`, `title`, `creation_year`, `description`, `user_id`) VALUES (1, NULL, 'Pink Diamond', 1986, 'The Birth of Love and Happiness ', 1);
+INSERT INTO `artwork` (`id`, `artwork_image`, `title`, `creation_year`, `description`, `user_id`) VALUES (2, NULL, 'For the Love of Money', 2023, 'Desires are the roots to all...', 2);
 
 COMMIT;
 
@@ -149,6 +161,7 @@ START TRANSACTION;
 USE `art_gallery`;
 INSERT INTO `comment` (`id`, `comment_text`, `create_time`, `update_time`, `artwork_id`, `user_id`) VALUES (1, 'whats up my boy', NULL, NULL, 1, 1);
 INSERT INTO `comment` (`id`, `comment_text`, `create_time`, `update_time`, `artwork_id`, `user_id`) VALUES (2, 'chillin', NULL, NULL, 2, 2);
+INSERT INTO `comment` (`id`, `comment_text`, `create_time`, `update_time`, `artwork_id`, `user_id`) VALUES (3, 'hey hey hey', NULL, NULL, 1, 1);
 
 COMMIT;
 

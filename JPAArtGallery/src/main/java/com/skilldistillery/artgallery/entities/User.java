@@ -178,7 +178,7 @@ public class User {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(active, artworks, comments, firstName, id, lastName, password, ratings, role, username);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -190,17 +190,13 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return active == other.active && Objects.equals(artworks, other.artworks)
-				&& Objects.equals(comments, other.comments) && Objects.equals(firstName, other.firstName)
-				&& id == other.id && Objects.equals(lastName, other.lastName)
-				&& Objects.equals(password, other.password) && Objects.equals(ratings, other.ratings)
-				&& Objects.equals(role, other.role) && Objects.equals(username, other.username);
+		return id == other.id;
 	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
-				+ ", password=" + password + ", active=" + active + ", role=" + role + "]";
+				+ "]";
 	}
 
 	

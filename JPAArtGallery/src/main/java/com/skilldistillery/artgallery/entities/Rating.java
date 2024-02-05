@@ -108,7 +108,7 @@ public class Rating {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(artwork, createTime, id, rate, user);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -120,8 +120,7 @@ public class Rating {
 		if (getClass() != obj.getClass())
 			return false;
 		Rating other = (Rating) obj;
-		return Objects.equals(artwork, other.artwork) && Objects.equals(createTime, other.createTime) && id == other.id
-				&& rate == other.rate && Objects.equals(user, other.user);
+		return id == other.id;
 	}
 
 	@Override

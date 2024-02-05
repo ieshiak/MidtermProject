@@ -17,13 +17,10 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class CommentDAOImpl implements CommentDAO {
 
-	
 	@Autowired
-    private UserDAO userDAO;
+	private UserDAO userDAO;
 	@PersistenceContext
 	private EntityManager em;
-	
-
 
 	@Override
 	public Comment findById(int commentId) {
@@ -39,11 +36,10 @@ public class CommentDAOImpl implements CommentDAO {
 
 	@Override
 	public Comment create(Comment comment) {
-	    comment.setCreateTime(LocalDateTime.now());
-	    em.persist(comment);
-	    return comment;
+		comment.setCreateTime(LocalDateTime.now());
+		em.persist(comment);
+		return comment;
 	}
-
 
 	@Override
 	public Comment update(Comment comment) {
@@ -59,30 +55,21 @@ public class CommentDAOImpl implements CommentDAO {
 
 	@Override
 	public List<Comment> retrieveUserComments(String username) {
-	    try {
-	        System.out.println("Entering retrieveUserComments method");
+		try {
+			System.out.println("Entering retrieveUserComments method");
+			System.out.println("Provided username: " + username);
+			User user = userDAO.findUserByUsername(username);
 
-	        // Print the provided username for debugging
-	        System.out.println("Provided username: " + username);
+			if (user != null) {
+				System.out.println("User found: " + user);
 
-	        User user = userDAO.findUserByUsername(username);
-
-	        if (user != null) {
-	            // Print user details for debugging
-	            System.out.println("User found: " + user);
-
-	            return userDAO.findCommentsByUserId(user.getId());
-	        } else {
-	            throw new RuntimeException("User not found for username: " + username);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        throw e; // Rethrow the exception to propagate it
-	    }
+				return userDAO.findCommentsByUserId(user.getId());
+			} else {
+				throw new RuntimeException("User not found for username: " + username);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
-
-	
-
-
-
 }

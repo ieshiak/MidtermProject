@@ -23,29 +23,19 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User authenticateUser(String username, String password) {
-	    try {
-	        System.out.println("Entering authenticateUser method");
-
-	        // Print the provided username for debugging
-	        System.out.println("Provided username: " + username);
-
-	        // Query to authenticate the user
-	        String query = "SELECT u FROM User u WHERE u.username = :username AND u.password = :password";
-	        User user = em.createQuery(query, User.class)
-	                     .setParameter("username", username)
-	                     .setParameter("password", password)
-	                     .getSingleResult();
-
-	        // Print the authenticated user for debugging
-	        System.out.println("Authenticated User: " + user);
-
-	        return user;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        throw e; // Rethrow the exception to propagate it
-	    }
+		try {
+			System.out.println("Entering authenticateUser method");
+			System.out.println("Provided username: " + username);
+			String query = "SELECT u FROM User u WHERE u.username = :username AND u.password = :password";
+			User user = em.createQuery(query, User.class).setParameter("username", username)
+					.setParameter("password", password).getSingleResult();
+			System.out.println("Authenticated User: " + user);
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
-
 
 	@Override
 	public User findById(int userId) {
@@ -76,17 +66,15 @@ public class UserDAOImpl implements UserDAO {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 	@Override
 	public User findUserByUsername(String username) {
-	    String query = "SELECT u FROM User u WHERE u.username = :username";
-	    try {
-	        return em.createQuery(query, User.class)
-	                .setParameter("username", username)
-	                .getSingleResult();
-	    } catch (NoResultException e) {
-	        return null; // User not found
-	    }
+		String query = "SELECT u FROM User u WHERE u.username = :username";
+		try {
+			return em.createQuery(query, User.class).setParameter("username", username).getSingleResult();
+		} catch (NoResultException e) {
+			return null; // User not found
+		}
 	}
 
 	@Override
@@ -103,25 +91,20 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<Comment> findCommentsByUserId(int userId) {
-	    try {
-	        System.out.println("Entering findCommentsByUserId method");
+		try {
+			System.out.println("Entering findCommentsByUserId method");
+			System.out.println("Provided userId: " + userId);
+			String query = "SELECT c FROM Comment c WHERE c.user.id = :userId";
+			List<Comment> comments = em.createQuery(query, Comment.class).setParameter("userId", userId)
+					.getResultList();
 
-	        // Print the provided userId for debugging
-	        System.out.println("Provided userId: " + userId);
+			System.out.println("Retrieved Comments: " + comments);
 
-	        String query = "SELECT c FROM Comment c WHERE c.user.id = :userId";
-	        List<Comment> comments = em.createQuery(query, Comment.class)
-	                                   .setParameter("userId", userId)
-	                                   .getResultList();
-
-	        // Print the retrieved comments for debugging
-	        System.out.println("Retrieved Comments: " + comments);
-
-	        return comments;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        throw e; // Rethrow the exception to propagate it
-	    }
+			return comments;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
