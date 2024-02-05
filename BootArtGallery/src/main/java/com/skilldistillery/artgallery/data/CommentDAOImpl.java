@@ -11,6 +11,7 @@ import com.skilldistillery.artgallery.entities.User;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -24,14 +25,15 @@ public class CommentDAOImpl implements CommentDAO {
 
 	@Override
 	public Comment findById(int commentId) {
-		// TODO Auto-generated method stub
-		return null;
+		Comment managed = em.find(Comment.class, commentId);
+		return managed;
 	}
 
 	@Override
 	public List<Comment> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		String jpql = "SELECT c FROM Comment c";
+		Query query = em.createQuery(jpql, Comment.class);
+		return query.getResultList();
 	}
 
 	@Override
@@ -43,14 +45,28 @@ public class CommentDAOImpl implements CommentDAO {
 
 	@Override
 	public Comment update(Comment comment) {
-		// TODO Auto-generated method stub
-		return null;
+		Comment managed = em.find(Comment.class, comment.getId());
+		
+		if( managed != null) {
+			managed.setCommentText(comment.getCommentText());
+			managed.setUpdateTime(comment.getUpdateTime());
+		}
+		return managed;
 	}
 
 	@Override
 	public boolean delete(int commentId) {
-		// TODO Auto-generated method stub
-		return false;
+		Comment commentToDelete = findById(commentId);
+		if(commentToDelete != null) {
+			try {
+				em.remove(commentToDelete);
+				return true;
+		       } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+
+	        return false;
 	}
 
 	@Override

@@ -61,7 +61,7 @@ public class ArtworkController {
 			} else {
 				model.addAttribute("artworkCreated", false);
 			}
-			return "/create";
+			return "/createArtwork";
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("error", "An unexpected error occurred.");
