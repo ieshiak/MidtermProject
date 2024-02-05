@@ -40,8 +40,8 @@ DROP TABLE IF EXISTS `artwork` ;
 
 CREATE TABLE IF NOT EXISTS `artwork` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `artwork_image` BLOB NULL,
   `title` VARCHAR(500) NULL,
+  `artwork_image` TEXT NULL,
   `creation_year` YEAR NULL,
   `description` VARCHAR(2000) NULL,
   `user_id` INT NULL,
@@ -137,8 +137,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `art_gallery`;
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `active`, `role`) VALUES (1, 'jane', 'johnson', 'jane', 'jane', true, 'user');
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `active`, `role`) VALUES (2, 'joe', 'howards', 'joe', 'joe', true, 'admin');
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `active`, `role`) VALUES (1, 'Ieshia', 'Parker', 'ieshiak', 'esha', true, 'admin');
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `active`, `role`) VALUES (2, 'Jane', 'Howards', 'jane', 'jane', true, 'user');
 
 COMMIT;
 
@@ -148,8 +148,11 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `art_gallery`;
-INSERT INTO `artwork` (`id`, `artwork_image`, `title`, `creation_year`, `description`, `user_id`) VALUES (1, NULL, 'Pink Diamond', 1986, 'The Birth of Love and Happiness ', 1);
-INSERT INTO `artwork` (`id`, `artwork_image`, `title`, `creation_year`, `description`, `user_id`) VALUES (2, NULL, 'For the Love of Money', 2023, 'Desires are the roots to all...', 2);
+INSERT INTO `artwork` (`id`, `title`, `artwork_image`, `creation_year`, `description`, `user_id`) VALUES (1, 'Pink Dragon', NULL, 2022, 'Lost in space or more like getting in danger. Yikes!', 1);
+INSERT INTO `artwork` (`id`, `title`, `artwork_image`, `creation_year`, `description`, `user_id`) VALUES (2, 'Busy Body', NULL, 2023, 'My desires are the root to all ambition.', 1);
+INSERT INTO `artwork` (`id`, `title`, `artwork_image`, `creation_year`, `description`, `user_id`) VALUES (3, 'Motivational Diamond', NULL, 2022, 'The dollar $ign paired with girls best friend, with big dreams and adoring things.', 1);
+INSERT INTO `artwork` (`id`, `title`, `artwork_image`, `creation_year`, `description`, `user_id`) VALUES (4, 'Beautie Full Moon', NULL, 2020, 'Tonight lets stare at the Virgo Moon and gaze at its Beauty. ', 1);
+INSERT INTO `artwork` (`id`, `title`, `artwork_image`, `creation_year`, `description`, `user_id`) VALUES (5, 'Water Colors ', NULL, 2021, 'Can you imagine the rainbow?', 1);
 
 COMMIT;
 
@@ -159,9 +162,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `art_gallery`;
-INSERT INTO `comment` (`id`, `comment_text`, `create_time`, `update_time`, `artwork_id`, `user_id`) VALUES (1, 'whats up my boy', NULL, NULL, 1, 1);
-INSERT INTO `comment` (`id`, `comment_text`, `create_time`, `update_time`, `artwork_id`, `user_id`) VALUES (2, 'chillin', NULL, NULL, 2, 2);
-INSERT INTO `comment` (`id`, `comment_text`, `create_time`, `update_time`, `artwork_id`, `user_id`) VALUES (3, 'hey hey hey', NULL, NULL, 1, 1);
+INSERT INTO `comment` (`id`, `comment_text`, `create_time`, `update_time`, `artwork_id`, `user_id`) VALUES (1, 'lovely', NULL, NULL, 1, 1);
+INSERT INTO `comment` (`id`, `comment_text`, `create_time`, `update_time`, `artwork_id`, `user_id`) VALUES (2, 'this is amazing!', NULL, NULL, 1, 2);
 
 COMMIT;
 
@@ -172,7 +174,8 @@ COMMIT;
 START TRANSACTION;
 USE `art_gallery`;
 INSERT INTO `rating` (`id`, `rate`, `create_time`, `artwork_id`, `user_id`) VALUES (1, 'Love', NULL, 1, 1);
-INSERT INTO `rating` (`id`, `rate`, `create_time`, `artwork_id`, `user_id`) VALUES (2, 'Like', NULL, 2, 2);
+INSERT INTO `rating` (`id`, `rate`, `create_time`, `artwork_id`, `user_id`) VALUES (2, 'Love', NULL, 2, 1);
+INSERT INTO `rating` (`id`, `rate`, `create_time`, `artwork_id`, `user_id`) VALUES (3, 'Like', NULL, 4, 1);
 
 COMMIT;
 
