@@ -44,11 +44,11 @@ public class ArtworkController {
 		return "artwork";
 	}
 
-	@GetMapping("/create")
+	@GetMapping("/createArtwork")
 	public String createArtworkForm(Model model) {
 		model.addAttribute("artwork", new Artwork());
 		model.addAttribute("artworkCreated", false);
-		return "/create";
+		return "/createArtwork";
 	}
 
 	@PostMapping("/createArtwork")

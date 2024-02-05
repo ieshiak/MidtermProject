@@ -43,14 +43,5 @@
 		</c:otherwise>
 	</c:choose>
 
-<div align= "center">
-<form action="/upload" method="post" enctype="multipart/form-data">
-    <label for="photo">Select Image:</label>
-    <input type="file" name="photo" id="photo" accept="image/*" required>
-    <br>
-    <input type="submit" value="Upload Photo">
-</form>
-</div>
-
 </body>
 </html>
