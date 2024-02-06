@@ -73,5 +73,7 @@ public class LoginController {
 		session.removeAttribute("timeOnSite");
 		return mv;
 	}
+	
+	
 
 }

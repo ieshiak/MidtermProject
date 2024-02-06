@@ -24,8 +24,8 @@
 				Login time:
 				<c:out value="${sessionScope.loginTime}" />
 			</h4>
-			<h3>Recent Comments:</h3>
 			<c:if test="${not empty comments}">
+			<h3>Recent Comments:</h3>
 				<ul>
 					<c:forEach var="comment" items="${comments}">
 						<li>${comment.commentText}- ${comment.createTime}</li>
