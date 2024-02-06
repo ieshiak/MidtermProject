@@ -7,12 +7,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.skilldistillery.artgallery.data.ArtworkDAO;
 import com.skilldistillery.artgallery.data.CommentDAO;
 import com.skilldistillery.artgallery.data.UserDAO;
+import com.skilldistillery.artgallery.entities.Artwork;
 import com.skilldistillery.artgallery.entities.Comment;
 import com.skilldistillery.artgallery.entities.User;
 
@@ -56,6 +59,31 @@ public class UserController {
 	    } else {
 	        return "login";
 	    }
+	}
+	
+	@GetMapping("/createUser")
+	public String createUserForm(Model model) {
+		model.addAttribute("user", new User());
+		model.addAttribute("userCreated", false);
+		return "/createUser";
+	}
+
+	@PostMapping("/createUser")
+	public String addUser(User user, Model model) {
+		try {
+			User newUser = userDAO.create(user);
+			if (newUser != null) {
+				model.addAttribute("userCreated", true);
+				model.addAttribute("newUser", newUser);
+			} else {
+				model.addAttribute("userCreated", false);
+			}
+			return "/createUser";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("error", "An unexpected error occurred.");
+			return "error";
+		}
 	}
 
 }

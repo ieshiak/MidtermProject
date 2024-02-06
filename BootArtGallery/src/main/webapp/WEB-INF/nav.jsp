@@ -22,16 +22,16 @@
 </style>
 <nav>
 	<a href="/home">Home</a>
+	<a href="/artwork">Artwork</a>
 	<c:choose>
 <c:when test="${not empty sessionScope.loggedInUser }">
 <a href="/account">Account</a>
 <a href="/createArtwork">Create</a>
-<a href="/uploadForm">Upload</a>
 <a href="/logout">Logout</a>
 </c:when>
 <c:otherwise>
 <a href="/login">Login</a>
-<a href="/artwork">Artwork</a>
+<a href="/createUser">Sign Up</a>
 </c:otherwise>
 </c:choose>
 

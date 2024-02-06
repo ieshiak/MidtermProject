@@ -48,7 +48,7 @@ public class ArtworkController {
 	}
 
 	@PostMapping("/createArtwork")
-	public String addChore(Artwork artwork, Model model) {
+	public String addArtwork(Artwork artwork, Model model) {
 		try {
 			Artwork newArtwork = artworkDAO.create(artwork);
 			if (newArtwork != null) {
