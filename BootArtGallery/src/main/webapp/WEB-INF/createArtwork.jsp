@@ -8,6 +8,8 @@
 <title>Create Artwork</title>
 </head>
 <body>
+<%--Edit the file nav.jsp to change nav links --%>
+<jsp:include page="nav.jsp"/>
 	<h3>Create Artwork</h3>
 	<h3>HEY</h3>
 	
@@ -18,12 +20,12 @@
 			Creation Year: <input type="text" name="creationYear" /> <br> <input
 				type="submit" value="Create Artwork" />
 		</div>
-	</form>
+<!-- 	</form>
 		<form action="/upload" method="post" enctype="multipart/form-data">
 			<label for="photo">Select Image:</label> <input type="file"
 				name="photo" id="photo" accept="image/*" required> <br>
 			<input type="submit" value="Upload Photo">
-		</form>
+		</form> -->
 
 </body>
 </html>

@@ -11,10 +11,12 @@
 <jsp:include page="nav.jsp"/>
 
 <h2>All Artwork</h2>
+
 <c:forEach var="artwork" items="${artworks}">
     <p>
         <a href="getArtwork.do?artworkId=${artwork.id}">
             ${artwork.title}
+            <img src="${artwork.artworkImage}" alt="${artwork.title}" width="800" height="800">
         </a>
     </p>
 </c:forEach>

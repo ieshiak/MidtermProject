@@ -3,7 +3,6 @@ package com.skilldistillery.artgallery.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +20,6 @@ public class ArtworkController {
 	@Autowired
 	private ArtworkDAO artworkDAO;
 
-//	@Value("${upload.directory}")
-//	private String uploadDirectory;
-
 	@GetMapping(path = "getArtwork.do", params = "artworkId")
 	public String getArtworkById(@RequestParam("artworkId") int artworkId, Model model) {
 		System.out.println("getArtworkById method called with Artwork ID: " + artworkId);
@@ -37,8 +33,8 @@ public class ArtworkController {
 		}
 	}
 
-	@RequestMapping(path = "/artwork")
-	public String showArtwork(Model model) {
+	@GetMapping("/artwork")
+	public String showArtworks(Model model) {
 		List<Artwork> artworks = artworkDAO.findAll();
 		model.addAttribute("artworks", artworks);
 		return "artwork";

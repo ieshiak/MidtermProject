@@ -26,6 +26,7 @@
 <c:when test="${not empty sessionScope.loggedInUser }">
 <a href="/account">Account</a>
 <a href="/createArtwork">Create</a>
+<a href="/uploadForm">Upload</a>
 <a href="/logout">Logout</a>
 </c:when>
 <c:otherwise>

@@ -2,6 +2,7 @@ package com.skilldistillery.artgallery.data;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.artgallery.entities.Rating;
@@ -17,6 +18,9 @@ public class RatingDAOImpl implements RatingDAO {
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	@Autowired
+	private ArtworkDAO artworkDAO;
 
 	@Override
 	public Rating findById(int ratingId) {
@@ -62,5 +66,5 @@ public class RatingDAOImpl implements RatingDAO {
 		}
 		return false;
 	}
-
+	
 }

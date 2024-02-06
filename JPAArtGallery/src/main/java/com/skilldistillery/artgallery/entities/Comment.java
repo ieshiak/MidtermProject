@@ -122,15 +122,11 @@ public class Comment {
 		    user = null;
 		    artwork = null; // Set artwork to null, not user
 		}
-
-
 	}
-	
-	
 
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", artwork=" + artwork + ", commentText=" + commentText + "]";
+		return " " + user + " " + commentText + " ";
 	}
 
 

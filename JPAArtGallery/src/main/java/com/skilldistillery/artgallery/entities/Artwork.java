@@ -11,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -22,10 +21,9 @@ public class Artwork {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Lob
-    @Column(name = "artwork_image")
-    private String artworkImage;
-	
+	@Column(name = "artwork_image")
+	private String artworkImage;
+
 	private String title;
 
 	@Column(name = "creation_year")
@@ -47,6 +45,11 @@ public class Artwork {
 
 	}
 
+	public Artwork(String title, String artworkImage) {
+		this.title = title;
+		this.artworkImage = artworkImage;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -54,7 +57,6 @@ public class Artwork {
 	public void setId(int id) {
 		this.id = id;
 	}
-
 
 	public String getArtworkImage() {
 		return artworkImage;
@@ -169,6 +171,4 @@ public class Artwork {
 		return "Artwork [id=" + id + ", title=" + title + ", description=" + description + "]";
 	}
 
-	
-	
 }

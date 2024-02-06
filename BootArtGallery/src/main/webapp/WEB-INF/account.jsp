@@ -29,7 +29,6 @@
 				<ul>
 					<c:forEach var="comment" items="${comments}">
 						<li>${comment.commentText}- ${comment.createTime}</li>
-						<!-- Adjust based on your Comment entity -->
 					</c:forEach>
 				</ul>
 			</c:if>
