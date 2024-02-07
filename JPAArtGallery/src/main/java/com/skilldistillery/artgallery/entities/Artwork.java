@@ -168,7 +168,7 @@ public class Artwork {
 
 	@Override
 	public String toString() {
-		return "Artwork [id=" + id + ", title=" + title + ", description=" + description + "]";
+		return "Artwork [id=" + id + ", artworkImage=" + artworkImage + ", title=" + title + "]";
 	}
 
 }

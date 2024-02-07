@@ -16,8 +16,9 @@
 <body>
 <form action="/deleteArtwork" method="post">
         <input type="hidden" name="id" value="${deleteArtwork.id}"/>
-
-        <p>Are you sure you want to delete the Artwork with ID ${deleteArtwork.id}?</p>
+ 		<img src="${deleteArtwork.artworkImage}" alt="${deleteArtwork.title}" width="200" height="200" class="center">
+        <p>Are you sure you want to delete the Artwork with ID ${deleteArtwork.id}?
+        </p>
 
 
         <input type="submit" value="Delete"/>

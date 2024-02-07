@@ -27,7 +27,7 @@
         <ul>
             <li><a href="/createArtwork">Create New Artwork</a></li>
             <li><a href="/editArtwork/${artworkList.id}">Edit Existing Artwork</a></li>
-            <li><a href="/deleteArtwork/${artworkList.id}">Delete Artwork</a></li>
+            <li><a href="/deleteArtwork?id=${artworkList.id}">Delete Artwork</a></li>
         </ul>
 		</c:forEach>
         

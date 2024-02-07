@@ -87,7 +87,7 @@ public class ArtworkController {
 		model.addAttribute("artworkCreated", artworkCreated);
 		model.addAttribute("newArtwork", newArtwork);
 		System.out.println("artworkCreated: " + artworkCreated);
-		System.out.println("newChore: " + newArtwork);
+		System.out.println("newArtwork: " + newArtwork);
 		return "/addArtworkSuccess";
 	}
 
@@ -113,14 +113,30 @@ public class ArtworkController {
 			return "error";
 		}
 	}
-		
-//		@GetMapping("/admin")
-//		public String showArtworksAdmin(Model model) {
-//			List<Artwork> artworks = artworkDAO.findAll();
-//			model.addAttribute("artworks", artworks);
-//			return "admin";
-//		
-//	}	
 	
+	@GetMapping("/deleteArtwork")
+	public String deleteArtworkForm(@RequestParam(name = "id") int id, Model model) {
+		try {
+			Artwork artworkToDelete = artworkDAO.findById(id);
+			System.err.println("*****************" + artworkToDelete);
+			if (artworkToDelete != null) {
+				model.addAttribute("deleteArtwork", artworkToDelete);
+
+				System.out.println("Artwork Title: " + artworkToDelete.getTitle());
+
+				return "/deleteArtwork";
+			} else {
+				System.out.println("Artwork not found with ID: " + id);
+				model.addAttribute("error", "Artwork not found.");
+				return "error";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Exception occurred in deleteArtworkForm: " + e.getMessage());
+			model.addAttribute("error", "Exception occurred in deleteArtworkForm: " + e.getMessage());
+			return "error";
+		}
+	}
+		
 }
 
