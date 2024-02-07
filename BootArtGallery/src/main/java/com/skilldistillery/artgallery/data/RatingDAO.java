@@ -16,4 +16,7 @@ public interface RatingDAO {
 
     boolean delete(int ratingId);
 
+	void ratingCount(int artworkId, int userId, String rate);
+
+
 }

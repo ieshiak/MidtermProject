@@ -198,6 +198,13 @@ public class User {
 		return " " + username + ": ";
 	}
 
-	
+	public boolean isAdmin() {
+	    return "admin".equals(role);
+	}
+
+	public void setAdmin(boolean isAdmin) {
+	    this.role = isAdmin ? "admin" : "user";
+	}
+
 
 }

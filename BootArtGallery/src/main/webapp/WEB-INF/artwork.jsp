@@ -4,19 +4,21 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
     <title>Artwork Details</title>
 </head>
+<div style="text-align: center;">
+<h2>LOVE&#128525;LIKE&#128527;HATE&#128520;</h2>
+</div>
 <body>
 <%--Edit the file nav.jsp to change nav links --%>
 <jsp:include page="nav.jsp"/>
-
-<h2>LOVE.LIKE.HATE Art Gallery</h2>
 
 <c:forEach var="artwork" items="${artworks}">
     <p>
         <a href="getArtwork.do?artworkId=${artwork.id}">
             
-            <img src="${artwork.artworkImage}" alt="${artwork.title}" width="800" height="800">
+            <img src="${artwork.artworkImage}" alt="${artwork.title}" width="800" height="800" class="center">
         </a>
     </p>
 </c:forEach>

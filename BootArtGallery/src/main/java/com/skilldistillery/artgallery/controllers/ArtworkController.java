@@ -29,9 +29,23 @@ public class ArtworkController {
 			return "/artworkById";
 		} else {
 			System.out.println("Artwork not found with ID: " + artworkId);
-			return "artworkNotFound";
+			return "error";
 		}
 	}
+	
+	@GetMapping(path = "searchArtwork.do", params = "keyword")
+	public String searchArtworkByKeyword(@RequestParam("keyword") String keyword, Model model) {
+	    System.out.println("searchArtworkByKeyword method called with Keyword: " + keyword);
+	    List<Artwork> artworks = artworkDAO.findByKeyword(keyword);
+	    if (!artworks.isEmpty()) {
+	        model.addAttribute("artworks", artworks);
+	        return "/searchResults";
+	    } else {
+	        System.out.println("No artwork found with keyword: " + keyword);
+	        return "error";
+	    }
+	}
+
 
 	@GetMapping("/artwork")
 	public String showArtworks(Model model) {

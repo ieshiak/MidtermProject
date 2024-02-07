@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Create Artwork</title>
 </head>
+<div style="text-align: center;">
+<h2>LOVE&#128525;LIKE&#128527;HATE&#128520;</h2>
+</div>
 <body>
 <%--Edit the file nav.jsp to change nav links --%>
 <jsp:include page="nav.jsp"/>

@@ -5,15 +5,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.skilldistillery.artgallery.data.ArtworkDAO;
 import com.skilldistillery.artgallery.data.RatingDAO;
+import com.skilldistillery.artgallery.entities.Artwork;
+import com.skilldistillery.artgallery.entities.Comment;
 import com.skilldistillery.artgallery.entities.Rating;
 
 @Controller
 public class RatingController {
 
 	@Autowired
-    private RatingDAO ratingDAO;
+	private RatingDAO ratingDAO;
+
+	@Autowired
+	private ArtworkDAO artworkDAO;
 
 	@GetMapping("createRating.do")
 	public String createRating(Model model) {
@@ -39,5 +46,14 @@ public class RatingController {
 			return "error";
 		}
 	}
-}
 
+	@PostMapping("/addComment")
+	public String addComment(@RequestParam("artworkId") int artworkId, @RequestParam("commentText") String commentText,
+			Model model) {
+		Artwork artwork = artworkDAO.findById(artworkId);
+		artwork.addComment(new Comment(commentText));
+		artworkDAO.update(artwork);
+		return "redirect:/your-page-url";
+										
+	}
+}

@@ -23,19 +23,27 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User authenticateUser(String username, String password) {
-		try {
-			System.out.println("Entering authenticateUser method");
-			System.out.println("Provided username: " + username);
-			String query = "SELECT u FROM User u WHERE u.username = :username AND u.password = :password";
-			User user = em.createQuery(query, User.class).setParameter("username", username)
-					.setParameter("password", password).getSingleResult();
-			System.out.println("Authenticated User: " + user);
-			return user;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
+	    try {
+	        System.out.println("Entering authenticateUser method");
+	        System.out.println("Provided username: " + username);
+	        String query = "SELECT u FROM User u WHERE u.username = :username AND u.password = :password";
+	        User user = em.createQuery(query, User.class)
+	                      .setParameter("username", username)
+	                      .setParameter("password", password)
+	                      .getSingleResult();
+	        System.out.println("Authenticated User: " + user);
+
+	        if (user.getRole().equals("admin")) { 
+	            user.setAdmin(true);
+	        }
+
+	        return user;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        throw e;
+	    }
 	}
+
 
 	@Override
 	public User create(User user) {

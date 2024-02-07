@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.skilldistillery.artgallery.entities.Artwork;
+import com.skilldistillery.artgallery.entities.Rate;
 import com.skilldistillery.artgallery.entities.Rating;
 
 import jakarta.persistence.EntityManager;
@@ -65,6 +67,12 @@ public class RatingDAOImpl implements RatingDAO {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public void ratingCount(int artworkId, int userId, String rate) {
+
+		
 	}
 	
 }

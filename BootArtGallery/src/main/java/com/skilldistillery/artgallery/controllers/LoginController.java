@@ -31,38 +31,37 @@ public class LoginController {
 
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public String login(HttpSession session) {
-		LocalDateTime loginTime = (LocalDateTime) session.getAttribute("loginTime");
-		if (loginTime != null) {
-			LocalDateTime now = LocalDateTime.now();
-			Duration totalTime = Duration.between(loginTime, now);
-			session.setAttribute("timeOnSite", totalTime);
-			return "home";
-		} else {
-			return "login";
-		}
+	    LocalDateTime loginTime = (LocalDateTime) session.getAttribute("loginTime");
+	    if (loginTime != null) {
+	        return "redirect:/account";
+	    } else {
+	        return "login";
+	    }
 	}
+
 
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
 	public String doLogin(User user, HttpSession session, Model model) {
-		try {
-			User authenticatedUser = userDAO.authenticateUser(user.getUsername(), user.getPassword());
+	    try {
+	        User authenticatedUser = userDAO.authenticateUser(user.getUsername(), user.getPassword());
 
-			if (authenticatedUser != null) {
-				session.setAttribute("loggedInUser", authenticatedUser);
-				LocalDateTime lt = LocalDateTime.now();
-				session.setAttribute("loginTime", lt);
-				return "account";
-			} else {
-				System.out.println("Authentication failed. Redirecting to login.");
-				return "login";
-			}
-		} catch (Exception e) {
-			System.out.println("An error occurred during login.");
-			e.printStackTrace();
-			model.addAttribute("errorDetails", "Invalid username or password.");
-			return "error";
-		}
+	        if (authenticatedUser != null) {
+	            session.setAttribute("loggedInUser", authenticatedUser);
+	            LocalDateTime lt = LocalDateTime.now();
+	            session.setAttribute("loginTime", lt);
+	            return "account";
+	        } else {
+	            System.out.println("Authentication failed. Redirecting to login.");
+	            return "login";
+	        }
+	    } catch (Exception e) {
+	        System.out.println("An error occurred during login.");
+	        e.printStackTrace();
+	        model.addAttribute("errorDetails", "Invalid username or password.");
+	        return "error";
+	    }
 	}
+
 
 	@RequestMapping("/logout")
 	public ModelAndView logOut(User user, HttpSession session) {

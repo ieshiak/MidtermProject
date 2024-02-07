@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Create User</title>
 </head>
+<div style="text-align: center;">
+<h2>LOVE&#128525;LIKE&#128527;HATE&#128520;</h2>
+</div>
 <body>
 <%--Edit the file nav.jsp to change nav links --%>
 <jsp:include page="nav.jsp"/>
@@ -17,7 +20,7 @@
 			First Name: <input type="text" name="firstName" required/> <br>
 			Last Name: <input type="text" name="lastName" required/> <br>
 			Username: <input type="text" name="username" required/> <br> 
-			Password: <input type="text" name="password" required/> <br> 
+			Password: <input type="password" name="password" required/> <br> 
 			<input type="submit" value="Sign Up" />
 		</div>
 </form>

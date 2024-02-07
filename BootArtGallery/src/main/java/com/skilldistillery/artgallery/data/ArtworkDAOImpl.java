@@ -90,4 +90,12 @@ public class ArtworkDAOImpl implements ArtworkDAO {
 		return ratings;
 	}
 
+	@Override
+    public List<Artwork> findByKeyword(String keyword) {
+        String jpql = "SELECT a FROM Artwork a WHERE LOWER(a.title) LIKE :keyword OR LOWER(a.description) LIKE :keyword";
+        Query query = em.createQuery(jpql, Artwork.class);
+        query.setParameter("keyword", "%" + keyword.toLowerCase() + "%");
+        return query.getResultList();
+    }
+
 }
