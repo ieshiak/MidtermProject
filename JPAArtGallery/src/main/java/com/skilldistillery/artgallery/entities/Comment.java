@@ -1,7 +1,6 @@
 package com.skilldistillery.artgallery.entities;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -38,6 +37,10 @@ public class Comment {
 
 	public Comment() {
 
+	}
+
+	public Comment(String commentText) {
+		this.commentText = commentText;
 	}
 
 	public int getId() {
@@ -77,11 +80,10 @@ public class Comment {
 	}
 
 	public void setCreateTime(LocalDateTime createTime) {
-	    if (this.createTime == null) {
-	        this.createTime = LocalDateTime.now();
-	    }
+		if (this.createTime == null) {
+			this.createTime = LocalDateTime.now();
+		}
 	}
-
 
 	public LocalDateTime getUpdateTime() {
 		return updateTime;
@@ -118,20 +120,17 @@ public class Comment {
 
 	public void removeArtwork(Artwork artwork) {
 		if (user != null && artwork != null && artwork.getComments().contains(this)) {
-		    artwork.getComments().remove(this);
-		    user = null;
-		    artwork = null; // Set artwork to null, not user
+			artwork.getComments().remove(this);
+			user = null;
+			artwork = null; // Set artwork to null, not user
 		}
-
-
 	}
-	
-	
 
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", artwork=" + artwork + ", commentText=" + commentText + "]";
+		StringBuilder sb = new StringBuilder();
+		sb.append(user.getUsername()).append(": ").append(commentText).append("\n");
+		return sb.toString();
 	}
-
 
 }

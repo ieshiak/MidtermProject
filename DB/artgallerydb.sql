@@ -41,8 +41,8 @@ DROP TABLE IF EXISTS `artwork` ;
 CREATE TABLE IF NOT EXISTS `artwork` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(500) NULL,
-  `artwork_image` TEXT NULL,
-  `creation_year` YEAR NULL,
+  `artwork_image` VARCHAR(500) NULL,
+  `creation_year` VARCHAR(200) NULL,
   `description` VARCHAR(2000) NULL,
   `user_id` INT NULL,
   PRIMARY KEY (`id`),
@@ -148,11 +148,11 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `art_gallery`;
-INSERT INTO `artwork` (`id`, `title`, `artwork_image`, `creation_year`, `description`, `user_id`) VALUES (1, 'Pink Dragon', NULL, 2022, 'Lost in space or more like getting in danger. Yikes!', 1);
-INSERT INTO `artwork` (`id`, `title`, `artwork_image`, `creation_year`, `description`, `user_id`) VALUES (2, 'Busy Body', NULL, 2023, 'My desires are the root to all ambition.', 1);
-INSERT INTO `artwork` (`id`, `title`, `artwork_image`, `creation_year`, `description`, `user_id`) VALUES (3, 'Motivational Diamond', NULL, 2022, 'The dollar $ign paired with girls best friend, with big dreams and adoring things.', 1);
-INSERT INTO `artwork` (`id`, `title`, `artwork_image`, `creation_year`, `description`, `user_id`) VALUES (4, 'Beautie Full Moon', NULL, 2020, 'Tonight lets stare at the Virgo Moon and gaze at its Beauty. ', 1);
-INSERT INTO `artwork` (`id`, `title`, `artwork_image`, `creation_year`, `description`, `user_id`) VALUES (5, 'Water Colors ', NULL, 2021, 'Can you imagine the rainbow?', 1);
+INSERT INTO `artwork` (`id`, `title`, `artwork_image`, `creation_year`, `description`, `user_id`) VALUES (1, 'Pink Dragon', 'images/PinkDragon.JPG', '2022', 'Lost in space or more like getting in danger. Yikes!', 1);
+INSERT INTO `artwork` (`id`, `title`, `artwork_image`, `creation_year`, `description`, `user_id`) VALUES (2, 'Busy Body', 'images/BusyBody.PNG', '2023', 'My desires are the root to all ambition.', 1);
+INSERT INTO `artwork` (`id`, `title`, `artwork_image`, `creation_year`, `description`, `user_id`) VALUES (3, 'Motivational Diamond', 'images/MotivationalDiamond.PNG', '2022', 'The dollar $ign paired with girls best friend, with big dreams and adoring things.', 1);
+INSERT INTO `artwork` (`id`, `title`, `artwork_image`, `creation_year`, `description`, `user_id`) VALUES (4, 'Beautie Full Moon', 'images/BeautieFullMoon.JPG', '2020', 'Tonight lets stare at the Virgo Moon and gaze at its Beauty. ', 1);
+INSERT INTO `artwork` (`id`, `title`, `artwork_image`, `creation_year`, `description`, `user_id`) VALUES (5, 'Water Colors ', 'images/WaterColors.JPG', '2021', 'Can you imagine the rainbow?', 1);
 
 COMMIT;
 

@@ -26,16 +26,7 @@ ERDiagram.png
 ### Technologies and Methodologies Used
 - Java
 - Spring Boot
-- Spring Data
 - SQL
-- REST
-- DOM
-- AJAX
-- XHR
-- JSON
-- Javascript
-- Typescript
-- Angular
 -  HTML
 - Bootstrap
 

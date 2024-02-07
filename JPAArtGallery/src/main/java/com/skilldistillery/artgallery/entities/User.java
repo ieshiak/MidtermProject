@@ -195,10 +195,16 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
-				+ "]";
+		return " " + username + ": ";
 	}
 
-	
+	public boolean isAdmin() {
+	    return "admin".equals(role);
+	}
+
+	public void setAdmin(boolean isAdmin) {
+	    this.role = isAdmin ? "admin" : "user";
+	}
+
 
 }

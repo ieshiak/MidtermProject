@@ -22,6 +22,8 @@ public interface ArtworkDAO {
 
     List<Rating> findRatingsByArtworkId(int artworkId);
 
+	List<Artwork> findByKeyword(String keyword);
+
 	
 	
 }

@@ -23,49 +23,62 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User authenticateUser(String username, String password) {
-		try {
-			System.out.println("Entering authenticateUser method");
-			System.out.println("Provided username: " + username);
-			String query = "SELECT u FROM User u WHERE u.username = :username AND u.password = :password";
-			User user = em.createQuery(query, User.class).setParameter("username", username)
-					.setParameter("password", password).getSingleResult();
-			System.out.println("Authenticated User: " + user);
-			return user;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
+	    try {
+	        System.out.println("Entering authenticateUser method");
+	        System.out.println("Provided username: " + username);
+	        String query = "SELECT u FROM User u WHERE u.username = :username AND u.password = :password";
+	        User user = em.createQuery(query, User.class)
+	                      .setParameter("username", username)
+	                      .setParameter("password", password)
+	                      .getSingleResult();
+	        System.out.println("Authenticated User: " + user);
+
+	        if (user.getRole().equals("admin")) { 
+	            user.setAdmin(true);
+	        }
+
+	        return user;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        throw e;
+	    }
 	}
 
-	@Override
-	public User findById(int userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<User> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public User create(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		em.persist(user);
+		return user;
 	}
 
 	@Override
+	@Transactional
 	public User update(User user) {
-		// TODO Auto-generated method stub
-		return null;
+	User managed = em.find(User.class, user.getId());
+	if(managed != null) {
+		managed.setFirstName(user.getFirstName());
+		managed.setLastName(user.getLastName());
+		managed.setUsername(user.getUsername());
+		managed.setPassword(user.getPassword());
+	}
+	return managed;
 	}
 
 	@Override
+	@Transactional
 	public boolean delete(int id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		User userToDelete = findById(id);
+		if(userToDelete != null) {
+			try {
+				em.remove(userToDelete);
+				return true;
+		      } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        return false;
+	    }
+	
 
 	@Override
 	public User findUserByUsername(String username) {
@@ -75,18 +88,6 @@ public class UserDAOImpl implements UserDAO {
 		} catch (NoResultException e) {
 			return null; // User not found
 		}
-	}
-
-	@Override
-	public List<User> findUsersByKeyword(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Artwork> findArtworkById(int artworkId) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -109,7 +110,18 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<Rating> findRatingsByUserId(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+		String query = "SELECT r FROM Rating r WHERE r.user.id = :userId";
+		List<Rating> ratings = em.createQuery(query, Rating.class).setParameter("userId", userId)
+				.getResultList();
+		System.out.println("Retrieved Ratings: " + ratings);
+		return ratings;
+	}	
+
+	@Override
+	public User findById(int userId) {
+	     User managed = em.find(User.class, userId);
+	        return managed;
+	    }
 	}
-}
+
+
