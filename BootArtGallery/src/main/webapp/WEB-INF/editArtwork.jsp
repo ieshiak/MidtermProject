@@ -15,11 +15,13 @@
 <h3>Edit Artwork</h3>
 <body>
 	<form action="/editArtwork" method="post">
+	<input type="hidden" name="id" value="${editedArtwork.id}"/>
+	<img src="${editedArtwork.artworkImage}" alt="${editedArtwork.title}" width="200" height="200">
 		<div>
 			Title: <input type="text" name="title" required /> <br>
 			Description: <input type="text" name="description" /> <br>
-			Creation Year: <input type="text" name="creationYear" /> <br> <input
-				type="submit" value="Edit Artwork" />
+			Creation Year: <input type="text" name="creationYear" /> <br> 
+			<input type="submit" value="Edit Artwork" />
 		</div>
 </body>
 </html>

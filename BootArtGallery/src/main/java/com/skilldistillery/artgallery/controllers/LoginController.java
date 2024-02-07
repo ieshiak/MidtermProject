@@ -1,8 +1,6 @@
 package com.skilldistillery.artgallery.controllers;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.skilldistillery.artgallery.data.UserDAO;
-import com.skilldistillery.artgallery.entities.Comment;
 import com.skilldistillery.artgallery.entities.User;
 
 import jakarta.servlet.http.HttpSession;

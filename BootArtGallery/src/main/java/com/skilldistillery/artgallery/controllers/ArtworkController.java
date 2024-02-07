@@ -7,9 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.skilldistillery.artgallery.data.ArtworkDAO;
@@ -80,6 +78,7 @@ public class ArtworkController {
 			return "error";
 		}
 	}
+	
 
 	@GetMapping("/artworkCreated")
 	public String showArtworkAddedPage(@ModelAttribute("artworkCreated") Boolean artworkCreated,
@@ -88,11 +87,11 @@ public class ArtworkController {
 		model.addAttribute("newArtwork", newArtwork);
 		System.out.println("artworkCreated: " + artworkCreated);
 		System.out.println("newArtwork: " + newArtwork);
-		return "/addArtworkSuccess";
+		return "/createArtwork";
 	}
 
-	@GetMapping("/editArtwork/{id}")
-	public String editArtworkForm(@PathVariable(name = "id") int id, Model model) {
+	@GetMapping("/editArtwork")
+	public String editArtworkForm(@RequestParam(name = "id") int id, Model model) {
 		try {
 			Artwork artwork = artworkDAO.findById(id);
 
@@ -118,7 +117,7 @@ public class ArtworkController {
 	public String deleteArtworkForm(@RequestParam(name = "id") int id, Model model) {
 		try {
 			Artwork artworkToDelete = artworkDAO.findById(id);
-			System.err.println("*****************" + artworkToDelete);
+			System.out.println("Artwork to Delete " + artworkToDelete);
 			if (artworkToDelete != null) {
 				model.addAttribute("deleteArtwork", artworkToDelete);
 

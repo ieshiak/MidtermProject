@@ -22,6 +22,26 @@
 			Creation Year: <input type="text" name="creationYear" /> <br> <input
 				type="submit" value="Create Artwork" />
 		</div>
-
+<br>
+<div>
+ <c:if test="${pageContext.request.method eq 'POST'}">
+ 
+        <c:if test="${not empty artworkCreated}">
+            <h3>Artwork Added Successfully</h3>
+            
+            <c:if test="${artworkCreated}">
+            
+                <p>New Artwork Details:</p>
+                <p>Title: ${newArtwork.title}</p>
+                <p>Description: ${newArtwork.description}</p>
+                <p>Creation Year: ${newArtwork.creationYear}</p>
+            </c:if>
+            
+            <c:if test="${not artworkCreated}">
+                <p>Error: Artwork not added. Please try again.</p>
+            </c:if>
+</c:if>
+</c:if>
+</div>
 </body>
 </html>

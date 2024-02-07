@@ -26,43 +26,41 @@ import jakarta.servlet.http.HttpSession;
 public class UserController {
 	@Autowired
 	private UserDAO userDAO;
-	
+
 	@Autowired
-    private CommentDAO commentDAO;
-	
+	private CommentDAO commentDAO;
+
 	@Autowired
-    private ArtworkDAO artworkDAO;
-	
-	
+	private ArtworkDAO artworkDAO;
+
 	@RequestMapping(path = "/account", method = RequestMethod.GET)
 	public String accountView(HttpSession session, Model model) {
-	    User loggedInUser = (User) session.getAttribute("loggedInUser");
-	    if (loggedInUser != null) {
-	        LocalDateTime loginTime = (LocalDateTime) session.getAttribute("loginTime");
-	        if (loginTime != null) {
-	            LocalDateTime now = LocalDateTime.now();
-	            Duration timeOnSite = Duration.between(loginTime, now);
-	            model.addAttribute("timeOnSite", timeOnSite);
-	        }
-	        
-	        List<Comment> comments = commentDAO.retrieveUserComments(loggedInUser.getUsername());
-	        model.addAttribute("comments", comments);
-	        List<Artwork> artworkList = new ArrayList<>();
-	        for (Comment comment : comments) {
-	            Artwork artwork = comment.getArtwork();
-	            if (artwork != null) {
-	                artworkList.add(artwork);
-	            }
-	        }
-	        model.addAttribute("artworkList", artworkList);
-	        
-	        return "account";
-	    } else {
-	        return "redirect:/login"; 
-	    }
+		User loggedInUser = (User) session.getAttribute("loggedInUser");
+		if (loggedInUser != null) {
+			LocalDateTime loginTime = (LocalDateTime) session.getAttribute("loginTime");
+			if (loginTime != null) {
+				LocalDateTime now = LocalDateTime.now();
+				Duration timeOnSite = Duration.between(loginTime, now);
+				model.addAttribute("timeOnSite", timeOnSite);
+			}
+
+			List<Comment> comments = commentDAO.retrieveUserComments(loggedInUser.getUsername());
+			model.addAttribute("comments", comments);
+			List<Artwork> artworkList = new ArrayList<>();
+			for (Comment comment : comments) {
+				Artwork artwork = comment.getArtwork();
+				if (artwork != null) {
+					artworkList.add(artwork);
+				}
+			}
+			model.addAttribute("artworkList", artworkList);
+
+			return "account";
+		} else {
+			return "redirect:/login";
+		}
 	}
 
-	
 	@GetMapping("/signUp")
 	public String createUserForm(Model model) {
 		model.addAttribute("user", new User());
@@ -87,19 +85,17 @@ public class UserController {
 			return "error";
 		}
 	}
-	
+
 	@RequestMapping(path = "/admin", method = RequestMethod.GET)
 	public String adminArtworkView(HttpSession session, Model model) {
-	    User loggedInUser = (User) session.getAttribute("loggedInUser");
-	    if (loggedInUser != null && loggedInUser.isAdmin()) {
-	        List<Artwork> artworkList = artworkDAO.findAll();
-	        model.addAttribute("artworkList", artworkList);
-	        return "/admin";
-	    } else {
-	        return "redirect:/login";
-	    }
+		User loggedInUser = (User) session.getAttribute("loggedInUser");
+		if (loggedInUser != null && loggedInUser.isAdmin()) {
+			List<Artwork> artworkList = artworkDAO.findAll();
+			model.addAttribute("artworkList", artworkList);
+			return "/admin";
+		} else {
+			return "redirect:/login";
+		}
 	}
-
-	
 
 }
