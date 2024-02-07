@@ -19,11 +19,18 @@
     <c:if test="${not empty sessionScope.loggedInUser}">
     <c:if test="${sessionScope.loggedInUser.admin}">
         <h3>Artwork Management</h3>
+        
+        <c:forEach var="artworkList" items="${artworkList}">
+        <a href="getArtwork.do?artworkId=${artworkList.id}">
+            <img src="${artworkList.artworkImage}" alt="${artworkList.title}" width="200" height="200" class="center">
+        </a>
         <ul>
             <li><a href="/createArtwork">Create New Artwork</a></li>
-            <li><a href="/editArtwork">Edit Existing Artwork</a></li>
-            <li><a href="/deleteArtwork">Delete Artwork</a></li>
+            <li><a href="/editArtwork/${artworkList.id}">Edit Existing Artwork</a></li>
+            <li><a href="/deleteArtwork/${artworkList.id}">Delete Artwork</a></li>
         </ul>
+		</c:forEach>
+        
     </c:if>
 </c:if>
     <c:if test="${empty sessionScope.loggedInUser}">

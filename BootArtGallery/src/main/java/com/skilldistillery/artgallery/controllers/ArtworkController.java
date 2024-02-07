@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,6 +43,7 @@ public class ArtworkController {
 	        return "/searchResults";
 	    } else {
 	        System.out.println("No artwork found with keyword: " + keyword);
+	        model.addAttribute("error", "No artwork found with keyword: " + keyword);
 	        return "error";
 	    }
 	}
@@ -80,7 +82,7 @@ public class ArtworkController {
 	}
 
 	@GetMapping("/artworkCreated")
-	public String showChoreAddedPage(@ModelAttribute("artworkCreated") Boolean artworkCreated,
+	public String showArtworkAddedPage(@ModelAttribute("artworkCreated") Boolean artworkCreated,
 			@ModelAttribute("newArtwork") Artwork newArtwork, Model model) {
 		model.addAttribute("artworkCreated", artworkCreated);
 		model.addAttribute("newArtwork", newArtwork);
@@ -89,4 +91,36 @@ public class ArtworkController {
 		return "/addArtworkSuccess";
 	}
 
+	@GetMapping("/editArtwork/{id}")
+	public String editArtworkForm(@PathVariable(name = "id") int id, Model model) {
+		try {
+			Artwork artwork = artworkDAO.findById(id);
+
+			if (artwork != null) {
+				model.addAttribute("editedArtwork", artwork);
+
+				System.out.println("Artwork Title: " + artwork.getTitle());
+
+				return "/editArtwork";
+			} else {
+				System.out.println("Artwork not found with ID: " + id);
+				model.addAttribute("error", "Artwork not found.");
+				return "error";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Exception occurred in editArtworkForm: " + e.getMessage());
+			return "error";
+		}
+	}
+		
+//		@GetMapping("/admin")
+//		public String showArtworksAdmin(Model model) {
+//			List<Artwork> artworks = artworkDAO.findAll();
+//			model.addAttribute("artworks", artworks);
+//			return "admin";
+//		
+//	}	
+	
 }
+

@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Create Artwork</title>
+<title>Edit Artwork</title>
 </head>
 <div style="text-align: center;">
 <h2>LOVE&#128525;LIKE&#128527;HATE&#128520;</h2>
@@ -13,15 +12,14 @@
 <body>
 <%--Edit the file nav.jsp to change nav links --%>
 <jsp:include page="nav.jsp"/>
-	<h3>Create Artwork</h3>
-	
-	<form action="/createArtwork" method="post">
+<h3>Edit Artwork</h3>
+<body>
+	<form action="/editArtwork" method="post">
 		<div>
 			Title: <input type="text" name="title" required /> <br>
 			Description: <input type="text" name="description" /> <br>
 			Creation Year: <input type="text" name="creationYear" /> <br> <input
-				type="submit" value="Create Artwork" />
+				type="submit" value="Edit Artwork" />
 		</div>
-
 </body>
 </html>
