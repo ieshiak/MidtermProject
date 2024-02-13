@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 
+
+
 <style>
     nav {
         display: flex;
@@ -28,7 +30,13 @@
             <a href="/account">Account</a>
             <a href="/logout">Logout</a>
             <c:if test="${sessionScope.loggedInUser.admin}">
-                <a href="/admin">Users NOT Allowed</a>
+                <!-- <a href="/admin">Admin</a> -->
+<form action="getArtwork.do" method="GET">
+  Artwork ID: <input type="text" name="artworkId" />
+  <input type="submit" value="Show Artwork" />
+</form>
+                
+                
             </c:if>
         </c:when>
         <c:otherwise>
@@ -37,10 +45,6 @@
         </c:otherwise>
     </c:choose>
 
-<form action="getArtwork.do" method="GET">
-  Artwork ID: <input type="text" name="artworkId" />
-  <input type="submit" value="Show Artwork" />
-</form>
 <form action="searchArtwork.do" method="GET">
   Keyword: <input type="text" name="keyword" />
   <input type="submit" value="Search Artwork" />

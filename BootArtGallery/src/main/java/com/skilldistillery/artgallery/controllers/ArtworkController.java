@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.skilldistillery.artgallery.data.ArtworkDAO;
+import com.skilldistillery.artgallery.data.RatingDAO;
 import com.skilldistillery.artgallery.entities.Artwork;
 
 @Controller
@@ -18,6 +19,14 @@ public class ArtworkController {
 
 	@Autowired
 	private ArtworkDAO artworkDAO;
+	
+	@Autowired
+	private RatingDAO ratingDAO;
+
+    @Autowired
+    public void setRatingDAO(RatingDAO ratingDAO) {
+        this.ratingDAO = ratingDAO;
+    }
 
 	@GetMapping(path = "getArtwork.do", params = "artworkId")
 	public String getArtworkById(@RequestParam("artworkId") int artworkId, Model model) {
@@ -31,21 +40,20 @@ public class ArtworkController {
 			return "error";
 		}
 	}
-	
+
 	@GetMapping(path = "searchArtwork.do", params = "keyword")
 	public String searchArtworkByKeyword(@RequestParam("keyword") String keyword, Model model) {
-	    System.out.println("searchArtworkByKeyword method called with Keyword: " + keyword);
-	    List<Artwork> artworks = artworkDAO.findByKeyword(keyword);
-	    if (!artworks.isEmpty()) {
-	        model.addAttribute("artworks", artworks);
-	        return "/searchResults";
-	    } else {
-	        System.out.println("No artwork found with keyword: " + keyword);
-	        model.addAttribute("error", "No artwork found with keyword: " + keyword);
-	        return "error";
-	    }
+		System.out.println("searchArtworkByKeyword method called with Keyword: " + keyword);
+		List<Artwork> artworks = artworkDAO.findByKeyword(keyword);
+		if (!artworks.isEmpty()) {
+			model.addAttribute("artworks", artworks);
+			return "/searchResults";
+		} else {
+			System.out.println("No artwork found with keyword: " + keyword);
+			model.addAttribute("error", "No artwork found with keyword: " + keyword);
+			return "error";
+		}
 	}
-
 
 	@GetMapping("/artwork")
 	public String showArtworks(Model model) {
@@ -64,13 +72,18 @@ public class ArtworkController {
 	@PostMapping("/createArtwork")
 	public String addArtwork(Artwork artwork, Model model) {
 		try {
+			System.out.println("Attempting to create artwork: " + artwork);
+
 			Artwork newArtwork = artworkDAO.create(artwork);
 			if (newArtwork != null) {
+				System.out.println("Artwork created successfully: " + newArtwork);
 				model.addAttribute("artworkCreated", true);
 				model.addAttribute("newArtwork", newArtwork);
 			} else {
+				System.out.println("Failed to create artwork.");
 				model.addAttribute("artworkCreated", false);
 			}
+
 			return "/createArtwork";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,7 +91,6 @@ public class ArtworkController {
 			return "error";
 		}
 	}
-	
 
 	@GetMapping("/artworkCreated")
 	public String showArtworkAddedPage(@ModelAttribute("artworkCreated") Boolean artworkCreated,
@@ -97,7 +109,6 @@ public class ArtworkController {
 
 			if (artwork != null) {
 				model.addAttribute("editedArtwork", artwork);
-
 				System.out.println("Artwork Title: " + artwork.getTitle());
 
 				return "/editArtwork";
@@ -112,7 +123,27 @@ public class ArtworkController {
 			return "error";
 		}
 	}
-	
+
+	@PostMapping("/editArtwork")
+	public String updateArtwork(@ModelAttribute("editedArtwork") Artwork editedArtwork, Model model) {
+		try {
+			System.out.println("Attempting to update artwork: " + editedArtwork);
+
+			artworkDAO.update(editedArtwork);
+			System.out.println("Artwork updated successfully");
+			model.addAttribute("editSuccess", true);
+
+			return "editArtwork";
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("An unexpected error occurred while updating the artwork: " + e.getMessage());
+
+			model.addAttribute("editSuccess", false);
+			model.addAttribute("error", "An unexpected error occurred while updating the artwork.");
+			return "error";
+		}
+	}
+
 	@GetMapping("/deleteArtwork")
 	public String deleteArtworkForm(@RequestParam(name = "id") int id, Model model) {
 		try {
@@ -136,6 +167,27 @@ public class ArtworkController {
 			return "error";
 		}
 	}
-		
-}
+	
+	@PostMapping("/deleteArtwork")
+	public String deleteArtwork(@RequestParam("id") int id, Model model) {
+	    try {
+	        boolean isDeleted = artworkDAO.delete(id);
+
+	        if (isDeleted) {
+	            model.addAttribute("artworkDeleted", true);
+	            model.addAttribute("deleteArtwork", artworkDAO.findById(id));
+	        } else {
+	            model.addAttribute("artworkDeleted", false);
+	            model.addAttribute("errorMessage", "Artwork not found or deletion failed.");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        model.addAttribute("artworkDeleted", false);
+	        model.addAttribute("errorMessage", "Exception occurred during artwork deletion: " + e.getMessage());
+	    }
+	    return "deleteArtwork";
+	}
+	}
+
+
 

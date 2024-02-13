@@ -2,12 +2,12 @@ package com.skilldistillery.artgallery.data;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.artgallery.entities.Artwork;
 import com.skilldistillery.artgallery.entities.Comment;
 import com.skilldistillery.artgallery.entities.Rating;
-import com.skilldistillery.artgallery.entities.User;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -20,6 +20,13 @@ public class ArtworkDAOImpl implements ArtworkDAO {
 
 	@PersistenceContext
 	private EntityManager em;
+
+	private CommentDAO commentDAO;
+
+	@Autowired
+	public void setCommentDAO(CommentDAO commentDAO) {
+		this.commentDAO = commentDAO;
+	}
 
 	@Override
 	public Artwork findById(int artworkId) {
@@ -42,36 +49,39 @@ public class ArtworkDAOImpl implements ArtworkDAO {
 	}
 
 	@Override
-    public Artwork create(Artwork artwork) {
-        em.persist(artwork);
-        return artwork;
-    }
+	public Artwork create(Artwork artwork) {
+		em.persist(artwork);
+		return artwork;
+	}
 
 	@Override
 	@Transactional
 	public Artwork update(Artwork artwork) {
-		Artwork managed = em.find(Artwork.class, artwork.getId());
-		if(managed != null) {
-			managed.setTitle(artwork.getTitle());
-			managed.setDescription(artwork.getDescription());
-			managed.setCreationYear(artwork.getCreationYear());
-		}
-		return managed;
+		return em.merge(artwork);
 	}
 
 	@Override
 	@Transactional
 	public boolean delete(int artworkId) {
-		Artwork artworkToDelete = findById(artworkId);
-		if(artworkToDelete != null) {
-			try {
+		try {
+			Artwork artworkToDelete = findById(artworkId);
+			if (artworkToDelete != null) {
+				// Delete associated comments
+				List<Comment> comments = commentDAO.findCommentsByArtworkId(artworkId);
+				for (Comment comment : comments) {
+					commentDAO.delete(comment.getId());
+				}
+
 				em.remove(artworkToDelete);
+				em.flush();
 				return true;
-		      } catch (Exception e) {
-	                e.printStackTrace();
-	            }
-	        }
-		return false;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Error deleting artwork with ID " + artworkId + ": " + e.getMessage());
+		}
 	}
 
 	@Override
@@ -84,18 +94,16 @@ public class ArtworkDAOImpl implements ArtworkDAO {
 
 	@Override
 	public List<Rating> findRatingsByArtworkId(int artworkId) {
-		String query = "SELECT r FROM Rating r WHERE r.artwork.id = :artworkId";
-		List<Rating> ratings = em.createQuery(query, Rating.class).setParameter("artworkId", artworkId)
-				.getResultList();
-		return ratings;
+		String jpql = "SELECT r FROM Rating r WHERE r.artwork.id = :artworkId";
+		return em.createQuery(jpql, Rating.class).setParameter("artworkId", artworkId).getResultList();
 	}
 
 	@Override
-    public List<Artwork> findByKeyword(String keyword) {
-        String jpql = "SELECT a FROM Artwork a WHERE LOWER(a.title) LIKE :keyword OR LOWER(a.description) LIKE :keyword";
-        Query query = em.createQuery(jpql, Artwork.class);
-        query.setParameter("keyword", "%" + keyword.toLowerCase() + "%");
-        return query.getResultList();
-    }
+	public List<Artwork> findByKeyword(String keyword) {
+		String jpql = "SELECT a FROM Artwork a WHERE LOWER(a.title) LIKE :keyword OR LOWER(a.description) LIKE :keyword";
+		Query query = em.createQuery(jpql, Artwork.class);
+		query.setParameter("keyword", "%" + keyword.toLowerCase() + "%");
+		return query.getResultList();
+	}
 
 }

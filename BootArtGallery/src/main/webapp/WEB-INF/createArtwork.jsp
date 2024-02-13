@@ -5,6 +5,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu"
+	rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="path/to/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="styles.css">
 <title>Create Artwork</title>
 </head>
 <div style="text-align: center;">
@@ -19,7 +26,7 @@
 		<div>
 			Title: <input type="text" name="title" required /> <br>
 			Description: <input type="text" name="description" /> <br>
-			Creation Year: <input type="text" name="creationYear" /> <br> <input
+			Creation Year: <input type="text" name="creationYear" min="1000" max="9999"/> <br> <input
 				type="submit" value="Create Artwork" />
 		</div>
 <br>

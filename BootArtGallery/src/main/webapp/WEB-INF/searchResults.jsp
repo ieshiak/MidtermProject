@@ -8,11 +8,20 @@
     <title>Artwork Search Results</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="scripts/rating.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu"
+	rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="path/to/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <%-- Edit the file nav.jsp to change nav links --%>
-    <jsp:include page="nav.jsp" />
+  	<div style="text-align: center;">
+		<h2>LOVE&#128525;LIKE&#128527;HATE&#128520;</h2>
+	</div>
+	<%--Edit the file nav.jsp to change nav links --%>
+	<jsp:include page="nav.jsp" />
 
     <div style="text-align: center;">
         <h2>Search Results</h2>
@@ -44,7 +53,29 @@
                     </c:forEach>
                 </ul>
             </div>
+            
         </c:forEach>
     </c:if>
+     <div style="text-align: center; width: 400%;">
+        <c:if test="${not empty sessionScope.loggedInUser}">
+            <div style="display: inline-block; width: 800px; text-align: center;">
+                <h2>Add Comment</h2>
+                <form id="commentForm" action="addComment.do" method="POST">
+                    <input type="hidden" name="artworkId" value="${artwork.id}">
+                    <textarea id="commentText" name="commentText" rows="4" cols="50" placeholder="Enter your comment here"></textarea><br>
+                    <br>
+                </form>
+            </div>
+            <div>
+                    <input id="submitComment" type="submit" value="Add Comment">
+            </div>
+        </c:if>
+    </div>
+
+    <div style="text-align: center;">
+        <c:if test="${empty sessionScope.loggedInUser}">
+            <p>Please <a href="/login">log in</a> to add a comment.</p>
+        </c:if>
+    </div>
 </body>
 </html>

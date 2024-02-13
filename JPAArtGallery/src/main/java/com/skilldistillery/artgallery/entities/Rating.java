@@ -128,6 +128,4 @@ public class Rating {
 		return "Rating [id=" + id + ", rate=" + rate + ", createTime=" + createTime + "]";
 	}
 
-	
-
 }

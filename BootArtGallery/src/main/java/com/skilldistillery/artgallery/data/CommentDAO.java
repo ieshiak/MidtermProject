@@ -10,11 +10,14 @@ public interface CommentDAO {
 
     List<Comment> findAll();
 
-    Comment create(Comment comment);
-
     Comment update(Comment comment);
 
     boolean delete(int commentId);
 
     List<Comment> retrieveUserComments(String username);
+
+	Comment create(Comment comment, int userId, int artworkId);
+
+	List<Comment> findCommentsByArtworkId(int artworkId);
+
 }

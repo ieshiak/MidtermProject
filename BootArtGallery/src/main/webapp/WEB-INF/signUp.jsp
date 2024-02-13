@@ -1,29 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Create User</title>
+<html lang="en">
+	<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles.css">
+<title>Sign Up</title>
+
+<style>
+
+</style>
 </head>
-<div style="text-align: center;">
-<h2>LOVE&#128525;LIKE&#128527;HATE&#128520;</h2>
-</div>
 <body>
-<%--Edit the file nav.jsp to change nav links --%>
-<jsp:include page="nav.jsp"/>
-	<h3>Sign Up</h3>
+	<div style="text-align: center;">
+		<h2>LOVE&#128525;LIKE&#128527;HATE&#128520;</h2>
+	</div>
+	<%--Edit the file nav.jsp to change nav links --%>
+	<jsp:include page="nav.jsp" />
 	
-	<form action="/createUser" method="post">
-		<div>
-			First Name: <input type="text" name="firstName" required/> <br>
-			Last Name: <input type="text" name="lastName" required/> <br>
-			Username: <input type="text" name="username" required/> <br> 
-			Password: <input type="password" name="password" required/> <br> 
+<div class="container2">
+        <h2>Sign Up</h2>
+	<form action="/signUp" method="post">
+			<input type="text" name="firstName" placeholder="First Name" required/> <br>
+			<input type="text" name="lastName" placeholder="Last Name" required/> <br>
+			<input type="text" name="username" placeholder="Username" required/> <br> 
+			<input type="password" name="password" placeholder="Password" required/> <br> 
 			<input type="submit" value="Sign Up" />
-		</div>
-</form>
+	</form>
+</div>
     
     <c:if test="${pageContext.request.method eq 'POST'}">
         <c:if test="${not empty userCreated}">
@@ -31,9 +37,11 @@
             
             <c:if test="${userCreated}">
                 <p>New User Details:</p>
-                <p>First Name: ${newUser.firstName}</p>
-                <p>Last Name: ${newUser.lastName}</p>
-                <p>Username: ${newUser.username}</p>
+                <ul>
+                <li>First Name: ${newUser.firstName}</li>
+                <li>Last Name: ${newUser.lastName}</li>
+                <li>Username: ${newUser.username}</li>
+                </ul>
             </c:if>
             
             <c:if test="${not userCreated}">

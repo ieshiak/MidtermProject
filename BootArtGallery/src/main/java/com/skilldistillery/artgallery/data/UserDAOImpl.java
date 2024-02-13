@@ -23,27 +23,24 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User authenticateUser(String username, String password) {
-	    try {
-	        System.out.println("Entering authenticateUser method");
-	        System.out.println("Provided username: " + username);
-	        String query = "SELECT u FROM User u WHERE u.username = :username AND u.password = :password";
-	        User user = em.createQuery(query, User.class)
-	                      .setParameter("username", username)
-	                      .setParameter("password", password)
-	                      .getSingleResult();
-	        System.out.println("Authenticated User: " + user);
+		try {
+			System.out.println("Entering authenticateUser method");
+			System.out.println("Provided username: " + username);
+			String query = "SELECT u FROM User u WHERE u.username = :username AND u.password = :password";
+			User user = em.createQuery(query, User.class).setParameter("username", username)
+					.setParameter("password", password).getSingleResult();
+			System.out.println("Authenticated User: " + user);
 
-	        if (user.getRole().equals("admin")) { 
-	            user.setAdmin(true);
-	        }
+			if (user.getRole().equals("admin")) {
+				user.setAdmin(true);
+			}
 
-	        return user;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        throw e;
-	    }
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
-
 
 	@Override
 	public User create(User user) {
@@ -54,31 +51,30 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	@Transactional
 	public User update(User user) {
-	User managed = em.find(User.class, user.getId());
-	if(managed != null) {
-		managed.setFirstName(user.getFirstName());
-		managed.setLastName(user.getLastName());
-		managed.setUsername(user.getUsername());
-		managed.setPassword(user.getPassword());
-	}
-	return managed;
+		User managed = em.find(User.class, user.getId());
+		if (managed != null) {
+			managed.setFirstName(user.getFirstName());
+			managed.setLastName(user.getLastName());
+			managed.setUsername(user.getUsername());
+			managed.setPassword(user.getPassword());
+		}
+		return managed;
 	}
 
 	@Override
 	@Transactional
 	public boolean delete(int id) {
 		User userToDelete = findById(id);
-		if(userToDelete != null) {
+		if (userToDelete != null) {
 			try {
 				em.remove(userToDelete);
 				return true;
-		      } catch (Exception e) {
-	                e.printStackTrace();
-	            }
-	        }
-	        return false;
-	    }
-	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public User findUserByUsername(String username) {
@@ -111,17 +107,14 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public List<Rating> findRatingsByUserId(int userId) {
 		String query = "SELECT r FROM Rating r WHERE r.user.id = :userId";
-		List<Rating> ratings = em.createQuery(query, Rating.class).setParameter("userId", userId)
-				.getResultList();
+		List<Rating> ratings = em.createQuery(query, Rating.class).setParameter("userId", userId).getResultList();
 		System.out.println("Retrieved Ratings: " + ratings);
 		return ratings;
-	}	
+	}
 
 	@Override
 	public User findById(int userId) {
-	     User managed = em.find(User.class, userId);
-	        return managed;
-	    }
+		User managed = em.find(User.class, userId);
+		return managed;
 	}
-
-
+}

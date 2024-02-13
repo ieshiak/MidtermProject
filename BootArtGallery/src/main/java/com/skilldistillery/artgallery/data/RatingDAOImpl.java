@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.skilldistillery.artgallery.entities.Artwork;
-import com.skilldistillery.artgallery.entities.Rate;
 import com.skilldistillery.artgallery.entities.Rating;
 
 import jakarta.persistence.EntityManager;
@@ -20,14 +18,18 @@ public class RatingDAOImpl implements RatingDAO {
 
 	@PersistenceContext
 	private EntityManager em;
-	
-	@Autowired
+
 	private ArtworkDAO artworkDAO;
+
+	@Autowired
+	public void setArtworkDAO(ArtworkDAO artworkDAO) {
+		this.artworkDAO = artworkDAO;
+	}
 
 	@Override
 	public Rating findById(int ratingId) {
-		Rating managed = em.find(Rating.class, ratingId);
-		return managed;
+		Rating rating = em.find(Rating.class, ratingId);
+		return rating;
 	}
 
 	@Override
@@ -70,9 +72,9 @@ public class RatingDAOImpl implements RatingDAO {
 	}
 
 	@Override
-	public void ratingCount(int artworkId, int userId, String rate) {
-
-		
+	public List<Rating> findRatingsByArtworkId(int artworkId) {
+		String jpql = "SELECT r FROM Rating r WHERE r.artwork.id = :artworkId";
+		return em.createQuery(jpql, Rating.class).setParameter("artworkId", artworkId).getResultList();
 	}
-	
+
 }
